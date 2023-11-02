@@ -1,0 +1,153 @@
+<section *ngIf="statusModal" class="container {{ esconderScroll() }}">
+  <div class="store-cart-content js-cart-content-open">
+    <div class="hidden-mobile js-desktop-cart">
+      <div class="checkout-dados">
+        <div class="title hidden-mobile">
+          <i class="material-icons action-color">local_mall</i>
+          <span class="text action-color title-sacola">Minha sacola</span>
+        </div>
+
+        <form id="frmCarrinho" [formGroup]="formProduto">
+          <input
+            data-val="true"
+            data-val-required="The Guid field is required."
+            id="Order_Guid"
+            name="Order.Guid"
+            type="hidden"
+            value="00000000-0000-0000-0000-000000000000" />
+          <ul
+            class="cart-list hidden-mobile visible-desktop-block js-cart-list"
+            data-is_empty="empty"
+            data-placeholder="Sua sacola está vazia">
+            <input
+              id="hdnCarrinhoQuantidade"
+              name="hdnCarrinhoQuantidade"
+              type="hidden"
+              value="2" />
+            <li
+              class="row list-item js-checkout-detalhe-items-list js-checkout-detalhe-items-list-ce151371-1efb-4a15-9cfe-a982347c49a6">
+              <div
+                class="col-xs-7 list-item-content description-content"
+                onclick="FctLoadDetalheProdutoByEdit('ce151371-1efb-4a15-9cfe-a982347c49a6');">
+                <a class="btn-editar-produto"
+                  ><i
+                    class="material-icons color-primary position-relative-bag top-2p"
+                    >edit_square</i
+                  ></a
+                >
+
+                <span class="title nome-produto">Pão Francês (01 unid)</span>
+              </div>
+
+              <div
+                class="col-xs-2 mb-width-19 list-item-content amount-content ajuste-amount">
+                <a
+                  class="js-cart-adjust js-decrease decrease btn-any-less"
+                  data-id="ce151371-1efb-4a15-9cfe-a982347c49a6"
+                  href="javascript:;"
+                  data-toggle="tooltip"
+                  title="Remover -1 item">
+                  <i
+                    class="material-icons material-icons-bag pos-absolute mdl-color-text--red"
+                    >remove_circle</i
+                  >
+                </a>
+
+                <span class="add-ajuste-new">4</span>
+
+                <a
+                  class="js-cart-adjust js-increase increase pos-relative btn-more"
+                  data-id="ce151371-1efb-4a15-9cfe-a982347c49a6"
+                  href="javascript:;"
+                  data-toggle="tooltip"
+                  title="Adicionar +1 item">
+                  <i
+                    class="material-icons material-icons-bag pos-absolute mdl-color-text--green"
+                    >add_circle</i
+                  >
+                </a>
+              </div>
+
+              <div class="col-xs-3 col-xs-new list-item-content price-content">
+                <span class="text js-price"> 3,60 </span>
+              </div>
+
+              <ul></ul>
+            </li>
+            <li
+              class="row list-item js-checkout-detalhe-items-list js-checkout-detalhe-items-list-f83c67ff-0b4b-4216-95f4-ecbd6a48a3ea">
+              <div
+                class="col-xs-7 list-item-content description-content"
+                onclick="FctLoadDetalheProdutoByEdit('f83c67ff-0b4b-4216-95f4-ecbd6a48a3ea');">
+                <a class="btn-editar-produto"
+                  ><i
+                    class="material-icons color-primary position-relative-bag top-2p"
+                    >edit_square</i
+                  ></a
+                >
+
+                <span class="title nome-produto">Pão para Cachorro Quente</span>
+              </div>
+
+              <div
+                class="col-xs-2 mb-width-19 list-item-content amount-content ajuste-amount">
+                <a
+                  class="js-cart-adjust js-decrease decrease btn-any-less"
+                  data-id="f83c67ff-0b4b-4216-95f4-ecbd6a48a3ea"
+                  href="javascript:;"
+                  data-toggle="tooltip"
+                  title="Remover -1 item">
+                  <i
+                    class="material-icons material-icons-bag pos-absolute mdl-color-text--red"
+                    >remove_circle</i
+                  >
+                </a>
+
+                <span class="add-ajuste-new">3</span>
+
+                <a
+                  class="js-cart-adjust js-increase increase pos-relative btn-more"
+                  data-id="f83c67ff-0b4b-4216-95f4-ecbd6a48a3ea"
+                  href="javascript:;"
+                  data-toggle="tooltip"
+                  title="Adicionar +1 item">
+                  <i
+                    class="material-icons material-icons-bag pos-absolute mdl-color-text--green"
+                    >add_circle</i
+                  >
+                </a>
+              </div>
+
+              <div class="col-xs-3 col-xs-new list-item-content price-content">
+                <span class="text js-price"> 6,00 </span>
+              </div>
+
+              <ul></ul>
+            </li>
+          </ul>
+          <div class="cart-info js-cart-info hidden-mobile">
+            <div class="total js-total-content">
+              <span class="text font-size-16px-top"
+                >Valor total desta compra</span
+              >
+              <span
+                class="value js-total-value font-size-16px"
+                data-price="9,60"
+                >R$ 9,60</span
+              >
+            </div>
+          </div>
+          <div
+            class="go-to-checkout-dados js-go-to-checkout-dados hidden-mobile visible-desktop-inline-block">
+            <button
+              class="mdl-button mdl-js-button mdl-button--raised custom-ripple mdl-button--accent checkout-button js-go-to-checkout"
+              id="btnFinalizarOrder"
+              data-upgraded=",MaterialButton">
+              <span class="text js-go-to-checkout-text"> FECHAR Order </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

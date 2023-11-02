@@ -1,0 +1,25 @@
+<section class="container">
+  <header>Que livro você procura?</header>
+  <div class="busca">
+    <input type="search" [formControl]="fieldSearch" />
+    <button>
+      <img src="assets/imagens/icone-busca.png" alt="Lupa de cor roxa" />
+    </button>
+  </div>
+  <p>Busque por nome ou categoria...</p>
+  <div class="resultados mensagem-erro" *ngIf="errorMsg">
+    {{ errorMsg }}
+  </div>
+  <div
+    class="container-card"
+    *ngIf="resultProdutcs$ | async as IProduct[]; else telaInicial">
+    <div *ngFor="let product of listProducts">
+      <app-product [product]="product"></app-product>
+    </div>
+  </div>
+  <ng-template #telaInicial>
+    <div *ngFor="let product of productsFacade.products$ | async">
+      <app-product [product]="product"></app-product>
+    </div>
+  </ng-template>
+</section>

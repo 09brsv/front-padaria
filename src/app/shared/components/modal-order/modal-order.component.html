@@ -1,0 +1,25 @@
+<section
+  *ngIf="statusModal && formOrder"
+  class="container {{ esconderScroll() }}">
+  <div class="card">
+    <div class="info-card" *ngFor="let product of products">
+      <div class="titulo form-group">
+        <div class="row">
+          <div class="col col-3">
+            {{ product.title }}
+          </div>
+          <div class="col col-3">
+            <span class="decrement">-</span>
+            {{ product.quantity }}
+            <span class="increment">+</span>
+          </div>
+          <div class="col col-3">
+            {{ product.amount * product.quantity | currency: 'BRL' }}
+          </div>
+        </div>
+      </div>
+      <button (click)="closeOrder()">Enviar pedido</button>
+    </div>
+  </div>
+  <div class="overlay"></div>
+</section>
