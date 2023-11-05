@@ -52,6 +52,8 @@ export class ProductsService {
   }
 
   getAll(): Observable<IResponseProps<IProduct[]>> {
+    console.log('oi');
+
     this.http.get<IResponseProps<IProduct[]>>(this.environment);
     return of({ data: this.products, count: this.products.length });
   }

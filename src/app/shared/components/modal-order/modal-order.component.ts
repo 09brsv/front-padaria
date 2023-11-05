@@ -7,7 +7,7 @@ import { IOrder } from 'src/app/pages/products/models';
 @Component({
   selector: 'app-modal-order',
   templateUrl: './modal-order.component.html',
-  styleUrls: ['./modal-order.component.css'],
+  styleUrls: ['./modal-order.component.scss'],
 })
 export class ModalOrderComponent implements OnInit {
   @Input({ required: true }) order!: IOrder;

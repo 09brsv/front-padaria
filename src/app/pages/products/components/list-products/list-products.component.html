@@ -12,14 +12,18 @@
   </div>
   <div
     class="container-card"
-    *ngIf="resultProdutcs$ | async as IProduct[]; else telaInicial">
-    <div *ngFor="let product of listProducts">
-      <app-product [product]="product"></app-product>
+    *ngIf="resultProducts$ | async as result; else telaInicial">
+    <div *ngIf="result.length">
+      <div *ngFor="let product of listProducts">
+        <app-product [product]="product"></app-product>
+      </div>
     </div>
   </div>
   <ng-template #telaInicial>
     <div *ngFor="let product of productsFacade.products$ | async">
-      <app-product [product]="product"></app-product>
+      <div *ngIf="product">
+        <app-product [product]="product"></app-product>
+      </div>
     </div>
   </ng-template>
 </section>

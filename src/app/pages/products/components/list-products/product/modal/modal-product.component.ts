@@ -7,10 +7,10 @@ import { IProduct } from 'src/app/pages/products/models';
 @Component({
   selector: 'app-modal-product',
   templateUrl: './modal-product.component.html',
-  styleUrls: ['./modal-product.component.css'],
+  styleUrls: ['./modal-product.component.scss'],
 })
 export class ModalProductComponent {
-  @Input({ required: true }) produto!: IProduct;
+  @Input({ required: true }) product!: IProduct;
   statusModal = true;
   @Output() mudouModal = new EventEmitter();
   formProduto!: FormGroup;

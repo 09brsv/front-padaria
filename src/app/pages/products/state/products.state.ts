@@ -1,6 +1,8 @@
 import { BehaviorSubject } from 'rxjs';
 import { IProduct } from '../models';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class ProductsState {
   private _products = new BehaviorSubject<IProduct[]>([]);
 

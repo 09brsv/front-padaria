@@ -4,7 +4,7 @@ import { IProduct } from '../../../models';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css'],
+  styleUrls: ['./product.component.scss'],
 })
 export class ProdutoComponent {
   modalAberto!: boolean;

@@ -1,6 +1,8 @@
-import { ProductsService } from './service/produtos.service';
+import { Injectable } from '@angular/core';
+import { ProductsService } from './service/products.service';
 import { ProductsState } from './state/products.state';
 
+@Injectable()
 export class ProductsFacade {
   constructor(
     private api: ProductsService,

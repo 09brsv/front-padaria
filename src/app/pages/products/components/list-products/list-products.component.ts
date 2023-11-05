@@ -3,11 +3,13 @@ import { ProductsFacade } from '../../products.facade';
 import { distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { IProduct } from '../../models';
+import { ProductsState } from '../../state/products.state';
 
 @Component({
   selector: 'app-list-products',
   templateUrl: './list-products.component.html',
-  styleUrls: ['./list-products.component.css'],
+  styleUrls: ['./list-products.component.scss'],
+  providers: [ProductsFacade, ProductsState],
 })
 export class ListProductsComponent {
   PAUSE = 300;
@@ -31,7 +33,7 @@ export class ListProductsComponent {
   //   })
   // )
 
-  resultProduct$ = this.fieldSearch.valueChanges.pipe(
+  resultProducts$ = this.fieldSearch.valueChanges.pipe(
     distinctUntilChanged(),
     switchMap((val: string) =>
       this.productsFacade.products$.pipe(
