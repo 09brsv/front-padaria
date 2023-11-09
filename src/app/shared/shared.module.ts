@@ -4,9 +4,10 @@ import { ModalOrderComponent } from './components/modal-order/modal-order.compon
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SlicePipe } from './pipes';
 
 @NgModule({
-  declarations: [ModalOrderComponent, HeaderComponent, FooterComponent],
+  declarations: [ModalOrderComponent, HeaderComponent, FooterComponent, SlicePipe],
   imports: [CommonModule, HttpClientModule, CurrencyPipe],
   exports: [FooterComponent, HeaderComponent, ModalOrderComponent, CommonModule],
 })

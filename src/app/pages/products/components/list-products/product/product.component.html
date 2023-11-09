@@ -1,20 +1,22 @@
 <div class="card">
-  <img
-    src="{{
-      product.image !== undefined
-        ? product.image
-        : 'assets/imagens/capa-indisponivel.png'
-    }}"
-    alt="Capa do livro" />
-  <div class="card-body">
-    <p class="card-title">{{ product.title}}</p>
-    <p class="card-text">Descrição:</p>
-    <p class="card-text">{{ product.description }}</p>
-    <p class="card-text">Preço:</p>
-    <p class="card-text">
-      {{ product.measurementValue }}/{{ product.measurementUnit }}
-    </p>
-    <button (click)="onModalChange(true)">Mais detalhes</button>
+  <div>
+    <img
+      src="{{
+        product.image !== undefined
+          ? product.image
+          : 'assets/image/capa-indisponivel.jpg'
+      }}"
+      alt="Capa do livro" />
+  </div>
+  <div class="card-body info-card">
+    <h3 class="card-title title">{{ product.title }}</h3>
+    <p class="card-text">{{ product.description | slice: 0 : 15 }}...</p>
+    <div class="price-qtd">
+      <strong class="card-text"
+        >R${{ product.price }}/{{ product.measurementUnit | lowercase }}</strong
+      >
+      <button style="margin-right: 12px;" (click)="onModalChange(true)">+</button>
+    </div>
   </div>
 </div>
 <div *ngIf="modalAberto">

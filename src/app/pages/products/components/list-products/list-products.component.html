@@ -10,20 +10,20 @@
   <div class="resultados mensagem-erro" *ngIf="errorMsg">
     {{ errorMsg }}
   </div>
-  <div
-    class="container-card"
-    *ngIf="resultProducts$ | async as result; else telaInicial">
-    <div *ngIf="result.length">
-      <div *ngFor="let product of listProducts">
-        <app-product [product]="product"></app-product>
+  <div class="row-card">
+    <div
+      class="container-card row-card"
+      *ngIf="resultProducts$ | async as result; else telaInicial">
+        <div *ngFor="let product of listProducts">
+          <app-product [product]="product"></app-product>
+        </div>
       </div>
     </div>
-  </div>
-  <ng-template #telaInicial>
-    <div *ngFor="let product of productsFacade.products$ | async">
-      <div *ngIf="product">
-        <app-product [product]="product"></app-product>
+    <ng-template #telaInicial>
+      <div *ngFor="let product of productsFacade.products$ | async">
+        <div *ngIf="product">
+          <app-product [product]="product"></app-product>
+        </div>
       </div>
-    </div>
-  </ng-template>
+    </ng-template>
 </section>
