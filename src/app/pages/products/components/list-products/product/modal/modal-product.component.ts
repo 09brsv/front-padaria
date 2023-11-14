@@ -11,11 +11,16 @@ import { IProduct } from 'src/app/pages/products/models';
 })
 export class ModalProductComponent {
   @Input({ required: true }) product!: IProduct;
+  @Input() modalAberto?: boolean;
   statusModal = true;
   @Output() mudouModal = new EventEmitter();
   formProduto!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    this.formProduto = this.fb.group({
+      quantity: [1],
+    });
+  }
 
   fecharModal() {
     this.statusModal = false;

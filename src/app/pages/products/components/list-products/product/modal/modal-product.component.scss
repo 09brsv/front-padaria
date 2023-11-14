@@ -1,19 +1,17 @@
-.card {
+
+.container {
   display: grid;
   grid-template-areas: 'imagem info-card botao-fechar' 'sinopse sinopse sinopse';
   grid-row-gap: 1rem;
-  min-height: 30rem;
-  max-height: 90%;
   grid-template-columns: 1fr 3fr 20px;
   grid-template-rows: min-content;
   border-radius: 8px;
   background: #fff;
-  position: fixed;
-  transform: translate(-50%, -50%);
-  left: 50%;
+  position: absolute;
   top: 50%;
-  padding: 24px;
-  z-index: 11;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 701;
 }
 
 .titulo {
@@ -83,16 +81,16 @@
   padding-bottom: 0;
 }
 
-.overlay {
-  background: #000;
-  height: 100vh;
-  left: 0;
-  opacity: 0.5;
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  z-index: 10;
-}
+// .overlay {
+//   background: #000;
+//   height: 100vh;
+//   left: 0;
+//   opacity: 0.5;
+//   position: fixed;
+//   top: 0;
+//   width: 100vw;
+//   z-index: 10;
+// }
 
 .botao-fechar {
   width: 24px;

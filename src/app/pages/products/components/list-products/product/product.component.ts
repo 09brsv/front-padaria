@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IProduct } from '../../../models';
 
 @Component({
@@ -9,8 +9,10 @@ import { IProduct } from '../../../models';
 export class ProdutoComponent {
   modalAberto!: boolean;
   @Input({ required: true }) product!: IProduct;
+  @Output() modalChangeProduct = new EventEmitter();
 
   onModalChange(evento: boolean) {
     this.modalAberto = evento;
+    this.modalChangeProduct.emit();
   }
 }

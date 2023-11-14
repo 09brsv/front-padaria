@@ -15,12 +15,13 @@
       <strong class="card-text"
         >R${{ product.price }}/{{ product.measurementUnit | lowercase }}</strong
       >
-      <button style="margin-right: 12px;" (click)="onModalChange(true)">+</button>
+      <button style="margin-right: 12px" (click)="onModalChange(true)">
+        +
+      </button>
     </div>
   </div>
 </div>
-<div *ngIf="modalAberto">
-  <app-modal-product
-    [product]="product"
-    (changeModal)="onModalChange(false)"></app-modal-product>
-</div>
+<app-modal-product
+  [product]="product"
+  [modalAberto]="modalAberto"
+  (changeModal)="onModalChange(false)"></app-modal-product>

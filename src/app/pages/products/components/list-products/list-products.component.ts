@@ -16,6 +16,8 @@ export class ListProductsComponent {
   listProducts!: IProduct[];
   fieldSearch = new FormControl();
   errorMsg = '';
+
+  modalAberto = false;
   constructor(public productsFacade: ProductsFacade) {
     productsFacade.getAllProducts();
   }
@@ -49,4 +51,9 @@ export class ListProductsComponent {
       )
     )
   );
+
+  onModalChange() {
+    console.log('dsada')
+  this.modalAberto = !this.modalAberto;
+  }
 }
