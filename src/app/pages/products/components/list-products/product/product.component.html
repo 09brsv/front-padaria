@@ -15,13 +15,14 @@
       <strong class="card-text"
         >R${{ product.price }}/{{ product.measurementUnit | lowercase }}</strong
       >
-      <button style="margin-right: 12px" (click)="onModalChange(true)">
+      <button style="margin-right: 12px" (click)="abrirModal()">
         +
       </button>
     </div>
   </div>
 </div>
 <app-modal-product
+  #modalProduct
   [product]="product"
   [modalAberto]="modalAberto"
   (changeModal)="onModalChange(false)"></app-modal-product>
