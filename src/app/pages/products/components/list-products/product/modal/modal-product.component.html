@@ -1,30 +1,65 @@
 <ng-template #content let-modal>
-	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-	</div>
-	<div class="modal-body">
-		<form>
-			<div class="mb-3">
-				<label for="dateOfBirth">Date of birth</label>
-				<div class="input-group">
-					<input
-						id="dateOfBirth"
-						class="form-control"
-						placeholder="yyyy-mm-dd"
-						name="dp"
-					/>
-					<button class="btn btn-outline-secondary bi bi-calendar3">ss</button>
-				</div>
-			</div>
-		</form>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-	</div>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ product.title }}</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="d-flex justify-content-between">
+      <div>
+        <img src="{{ product.image }}" alt="{{ product.title }}" />
+        <p>{{ product.description }}</p>
+      </div>
+      <div class="content-form">
+        <form>
+          <hr />
+          <div class="mb-3">
+            <div class="row g-3 mb-3">
+              <div class="col-12 d-flex justify-content-between">
+                <span>Preço: </span>
+                <strong>{{ product.price }}</strong>
+              </div>
+            </div>
+            <div class="form-group">
+              <div
+                class="row g-3 align-items-center justify-content-between mb-3">
+                <div class="col-4" style="text-align: left">
+                  <span>Quantidade: </span>
+                </div>
+                <div class="d-flex align-items-center gap-4" style="width: 40%">
+                  <span>-</span>
+                  <input
+                    type="number"
+                    name="quantity"
+                    value="1"
+                    min="0"
+                    max="1000"
+                    class="form-control" />
+                  <span>+</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')">
+      Adicionar ao carrinho
+    </button>
+  </div>
 </ng-template>
 
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">
+  Launch demo modal
+</button>
 
 <hr />
 

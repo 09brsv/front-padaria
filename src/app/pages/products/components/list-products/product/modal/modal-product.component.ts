@@ -50,7 +50,7 @@ export class ModalProductComponent {
 
 	open(content: TemplateRef<ElementRef>) {
 		console.log("🚀 ~ file: modal-product.component.ts:52 ~ ModalProductComponent ~ open ~ content:", content)
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then(
 			(result) => {
 				this.closeResult = `Closed with: ${result}`;
 			},
