@@ -4,6 +4,7 @@ import { distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { IProduct } from '../../models';
 import { ProductsState } from '../../state/products.state';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-list-products',
@@ -16,6 +17,7 @@ export class ListProductsComponent {
   listProducts!: IProduct[];
   fieldSearch = new FormControl();
   errorMsg = '';
+  searchIcon = faMagnifyingGlass;
 
   modalAberto = false;
   constructor(public productsFacade: ProductsFacade) {
@@ -54,6 +56,6 @@ export class ListProductsComponent {
 
   onModalChange() {
     console.log('dsada')
-  this.modalAberto = !this.modalAberto;
+    this.modalAberto = !this.modalAberto;
   }
 }

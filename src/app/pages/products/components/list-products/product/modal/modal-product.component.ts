@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewCh
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IProduct } from 'src/app/pages/products/models';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 // const body = document.querySelector('body');
 
 @Component({
@@ -19,6 +19,8 @@ export class ModalProductComponent {
   @ViewChild('content') content!: TemplateRef<ElementRef>;
 
   formProduto!: FormGroup;
+  negativeIcon = faMinus;
+  positiveIcon = faPlus;
 
   constructor(
     private readonly fb: FormBuilder,

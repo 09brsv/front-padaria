@@ -1,9 +1,9 @@
 <section class="container">
-  <header>Que livro você procura?</header>
-  <div class="busca">
-    <input type="search" [formControl]="fieldSearch" />
+  <header>Que produto você procura?</header>
+  <div class="inputs">
+      <input type="search" class="form-control" [formControl]="fieldSearch" />
     <button>
-      <img src="assets/imagens/icone-busca.png" alt="Lupa de cor roxa" />
+      <fa-icon [icon]="searchIcon"></fa-icon>
     </button>
   </div>
   <p>Busque por nome ou categoria...</p>

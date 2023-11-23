@@ -5,10 +5,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SlicePipe } from './pipes';
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+
 
 @NgModule({
   declarations: [ModalOrderComponent, HeaderComponent, FooterComponent, SlicePipe],
-  imports: [CommonModule, HttpClientModule, CurrencyPipe],
-  exports: [FooterComponent, HeaderComponent, ModalOrderComponent, CommonModule],
+  imports: [CommonModule, HttpClientModule, CurrencyPipe, FontAwesomeModule],
+  exports: [FooterComponent, HeaderComponent, ModalOrderComponent, CommonModule, FontAwesomeModule],
 })
 export class SharedModule {}

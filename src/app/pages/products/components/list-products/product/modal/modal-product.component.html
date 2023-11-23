@@ -20,7 +20,7 @@
             <div class="row g-3 mb-3">
               <div class="col-12 d-flex justify-content-between">
                 <span>Preço: </span>
-                <strong>{{ product.price }}</strong>
+                <strong>{{ product.price | currency: 'BRL' }}/{{ product.measurementUnit }}</strong>
               </div>
             </div>
             <div class="form-group">
@@ -29,8 +29,10 @@
                 <div class="col-4" style="text-align: left">
                   <span>Quantidade: </span>
                 </div>
-                <div class="d-flex align-items-center gap-4" style="width: 40%">
-                  <span>-</span>
+                <div class="d-flex align-items-center gap-4" style="width: 60%">
+                  <span class="button-quantity">
+                    <fa-icon [icon]="negativeIcon"></fa-icon>
+                  </span>
                   <input
                     type="number"
                     name="quantity"
@@ -38,7 +40,9 @@
                     min="0"
                     max="1000"
                     class="form-control" />
-                  <span>+</span>
+                  <span class="button-quantity">
+                    <fa-icon [icon]="positiveIcon"></fa-icon>
+                  </span>
                 </div>
               </div>
             </div>
@@ -50,7 +54,7 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark"
+      class="btn btn-success"
       (click)="modal.close('Save click')">
       Adicionar ao carrinho
     </button>
