@@ -13,7 +13,6 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
   providers: [ProductsFacade, ProductsState],
 })
 export class ListProductsComponent {
-  PAUSE = 300;
   listProducts!: IProduct[];
   fieldSearch = new FormControl();
   errorMsg = '';
@@ -22,20 +21,8 @@ export class ListProductsComponent {
   modalAberto = false;
   constructor(public productsFacade: ProductsFacade) {
     productsFacade.getAllProducts();
+    productsFacade.cart$.subscribe(res => console.log(res))
   }
-
-  // totalDeLivros$ = this.fieldSearch.valueChanges
-  // .pipe(
-  //   debounceTime(PAUSA),
-  //   filter((valorDigitado) => valorDigitado.length >= 3),
-  //   tap(() => console.log('Fluxo inicial')),
-  //   switchMap((valorDigitado) => this.service.buscar(valorDigitado)),
-  //   map(resultado => this.livrosResultado = resultado),
-  //   catchError(erro => {
-  //     console.log(erro)
-  //     return of()
-  //   })
-  // )
 
   resultProducts$ = this.fieldSearch.valueChanges.pipe(
     distinctUntilChanged(),

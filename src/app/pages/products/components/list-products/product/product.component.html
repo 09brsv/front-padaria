@@ -25,4 +25,5 @@
   #modalProduct
   [product]="product"
   [modalAberto]="modalAberto"
-  (changeModal)="onModalChange(false)"></app-modal-product>
+  (addToCartEmit)="onAddToCart($event)"
+  (changeModal)="onModalChange($event)"></app-modal-product>

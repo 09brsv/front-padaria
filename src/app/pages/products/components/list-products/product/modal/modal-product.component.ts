@@ -14,7 +14,8 @@ export class ModalProductComponent {
   @Input({ required: true }) product!: IProduct;
   @Input() modalAberto?: boolean;
   statusModal = true;
-  @Output() mudouModal = new EventEmitter();
+  @Output() changeModal = new EventEmitter<boolean>();
+  @Output() addToCartEmit = new EventEmitter<IProduct>();
 
   @ViewChild('content') content!: TemplateRef<ElementRef>;
 
@@ -33,7 +34,7 @@ export class ModalProductComponent {
 
   // fecharModal() {
   //   this.statusModal = false;
-  //   this.mudouModal.emit(this.statusModal);
+  //   this.changeModal.emit(this.statusModal);
   //   // body.style.overflow = "scroll"
   // }
 
@@ -45,7 +46,7 @@ export class ModalProductComponent {
 
   // abrirModal() {
   //   this.statusModal = true;
-  //   this.mudouModal.emit(this.statusModal);
+  //   this.changeModal.emit(this.statusModal);
   //   // body.style.overflow = "scroll"
   // }
   closeResult = '';
@@ -72,4 +73,10 @@ export class ModalProductComponent {
 				return `with: ${reason}`;
 		}
 	}
+
+  protected addToCart() {
+    this.addToCartEmit.emit(this.product);
+    this.changeModal.emit(true)
+    this.modalService.dismissAll()
+  }
 }
