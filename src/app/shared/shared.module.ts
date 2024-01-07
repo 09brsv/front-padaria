@@ -7,11 +7,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { SlicePipe } from './pipes';
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { CartComponent } from './components/cart/cart.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [ModalOrderComponent, HeaderComponent, FooterComponent, SlicePipe, CartComponent],
-  imports: [CommonModule, HttpClientModule, CurrencyPipe, FontAwesomeModule],
+  imports: [CommonModule, HttpClientModule, CurrencyPipe, FontAwesomeModule, ReactiveFormsModule],
   exports: [FooterComponent, HeaderComponent, CartComponent, ModalOrderComponent, CommonModule, FontAwesomeModule],
 })
 export class SharedModule {}

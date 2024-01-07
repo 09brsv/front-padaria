@@ -47,9 +47,14 @@
 }
 
  .inputs i{
-
-      position: absolute;
+  position: absolute;
   top: 14px;
   left: 4px;
   color: #b8b9bc;
+ }
+
+ .cesta {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
  }

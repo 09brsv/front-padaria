@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ProductsFacade } from '../../products.facade';
 import { distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { IProduct } from '../../models';
+import { EStatus, IOrder, IProduct } from '../../models';
 import { ProductsState } from '../../state/products.state';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faBasketShopping } from '@fortawesome/free-solid-svg-icons';
+import { ModalOrderComponent } from 'src/app/shared/components/modal-order/modal-order.component';
 
 @Component({
   selector: 'app-list-products',
@@ -14,14 +15,26 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 })
 export class ListProductsComponent {
   listProducts!: IProduct[];
+  order?: IOrder;
   fieldSearch = new FormControl();
   errorMsg = '';
   searchIcon = faMagnifyingGlass;
+  basketIcon = faBasketShopping;
+
+  @ViewChild('modalOrder') modalOrder!: ModalOrderComponent;
 
   modalAberto = false;
   constructor(public productsFacade: ProductsFacade) {
     productsFacade.getAllProducts();
-    productsFacade.cart$.subscribe(res => console.log(res))
+    productsFacade.cart$.subscribe(res => {
+      const amount = res.reduce((total, product) => total + (product.price * (product.quantity ?? 1)), 0);
+      this.order = {
+        amount,
+        products: res,
+        status: EStatus.pendente
+      }
+      console.log(res)
+    })
   }
 
   resultProducts$ = this.fieldSearch.valueChanges.pipe(
@@ -44,5 +57,9 @@ export class ListProductsComponent {
   onModalChange() {
     console.log('dsada')
     this.modalAberto = !this.modalAberto;
+  }
+
+  openModalOrder() {
+    this.order && this.modalOrder.open(this.modalOrder.content);
   }
 }

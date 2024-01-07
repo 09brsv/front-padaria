@@ -7,15 +7,14 @@
       aria-label="Close"
       (click)="modal.dismiss('Cross click')"></button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body" *ngIf="formProduto">
     <div class="d-flex justify-content-between">
       <div>
         <img src="{{ product.image }}" alt="{{ product.title }}" />
         <p>{{ product.description }}</p>
       </div>
       <div class="content-form">
-        <form>
-          <hr />
+        <form [formGroup]="formProduto">
           <div class="mb-3">
             <div class="row g-3 mb-3">
               <div class="col-12 d-flex justify-content-between">
@@ -31,19 +30,21 @@
                 </div>
                 <div class="d-flex align-items-center gap-4" style="width: 60%">
                   <span class="button-quantity">
-                    <fa-icon [icon]="negativeIcon"></fa-icon>
+                    <fa-icon [icon]="negativeIcon" (click)="changeProductValue('decrement')"></fa-icon>
                   </span>
                   <input
                     type="number"
-                    name="quantity"
-                    value="1"
+                    formControlName="quantity"
                     min="0"
                     max="1000"
                     class="form-control" />
                   <span class="button-quantity">
-                    <fa-icon [icon]="positiveIcon"></fa-icon>
+                    <fa-icon [icon]="positiveIcon" (click)="changeProductValue('increment')"></fa-icon>
                   </span>
                 </div>
+              </div>
+              <div class="row g-3 align-items-end">
+                <span>Total: <strong>{{formProduto.get('total')?.value | currency}}</strong></span>
               </div>
             </div>
           </div>
