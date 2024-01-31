@@ -1,44 +1,54 @@
-<ng-template #content let-modal *ngIf="statusModal && formOrder">
-  <div class="card" [formGroup]="formOrder" *ngIf="products">
+<ng-template #content let-modal *ngIf="statusModal && formOrder && products">
+  <div class="card" [formGroup]="formOrder">
     <div
-      class="info-card"
+      class="modal-body"
       formArrayName="products"
       *ngFor="let product of products; let i = index">
-      <div class="titulo form-group border-1 border-black" [formGroup]="product">
+      <div
+        class="titulo form-group border-1 border-black"
+        [formGroup]="product">
         <div class="row">
-          <div class="col col-3">
+          <div class="col col-4">
             {{ product.get('title')?.value }}
           </div>
-          <div class="d-flex align-items-center gap-4" style="width: 60%">
-            <span class="button-quantity">
-              <fa-icon
-                [icon]="negativeIcon"
-                (click)="changeProductValue('decrement', i)"></fa-icon>
-            </span>
-            <input
-              type="number"
-              formControlName="quantity"
-              min="0"
-              max="1000"
-              class="form-control" />
-            <span class="button-quantity">
-              <fa-icon
-                [icon]="positiveIcon"
-                (click)="changeProductValue('increment', i)"></fa-icon>
-            </span>
+          <div class="col col-4">
+            <div class="d-flex align-items-center gap-4">
+              <span class="button-quantity">
+                <fa-icon
+                  [icon]="negativeIcon"
+                  (click)="changeProductValue('decrement', i)"></fa-icon>
+              </span>
+              <input
+                type="number"
+                formControlName="quantity"
+                min="0"
+                max="1000"
+                class="form-control" />
+              <span class="button-quantity">
+                <fa-icon
+                  [icon]="positiveIcon"
+                  (click)="changeProductValue('increment', i)"></fa-icon>
+              </span>
+            </div>
           </div>
-        </div>
-        <div class="row g-3 align-items-end">
-          <span
-            >Total: <strong>{{ getTotal(i) | currency }}</strong></span
-          >
-        </div>
-        <div class="col col-3">
-          {{ product.get('price')?.value * product.get('quantity')?.value | currency }}
+          <div class="col col-4 g-3 align-items-end">
+            <span
+              >Total: <strong>{{ getTotal(i) | currency }}</strong></span
+            >
+          </div>
         </div>
       </div>
     </div>
-    <button (click)="closeOrder()">Enviar pedido</button>
+    <div class="row">
+      <div class="col col-12 justify-content-end">
+        {{ formOrder.get('amount')?.value | currency }}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn btn-success" (click)="closeOrder()">
+      Enviar pedido
+    </button>
   </div>
   <div class="overlay"></div>
 </ng-template>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { IProduct, TValueChange } from 'src/app/pages/products/models';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { CartState } from 'src/app/pages/products/state/cart.state';
 // const body = document.querySelector('body');
 
 @Component({
@@ -25,19 +26,20 @@ export class ModalProductComponent implements OnInit {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly modalService: NgbModal
-    ) {
-    }
-    ngOnInit(): void {
-      this.formProduto = this.fb.group({
-        quantity: 1,
-        total: this.product?.price
-      });
-      this.formProduto.get('quantity')?.valueChanges.subscribe({
-        next: () => {
-          this.formProduto.get('total')?.setValue(this.product?.price * this.formProduto.get('quantity')?.value)
-        }
-      })
+    private readonly modalService: NgbModal,
+  ) {
+
+  }
+  ngOnInit(): void {
+    this.formProduto = this.fb.group({
+      quantity: 1,
+      total: this.product?.price
+    });
+    this.formProduto.get('quantity')?.valueChanges.subscribe({
+      next: () => {
+        this.formProduto.get('total')?.setValue(this.product?.price * this.formProduto.get('quantity')?.value)
+      }
+    })
   }
 
   changeProductValue(handle: TValueChange) {
@@ -54,13 +56,14 @@ export class ModalProductComponent implements OnInit {
 
   closeResult = '';
 
-	open(content: TemplateRef<ElementRef>) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
-	}
+  open(content: TemplateRef<ElementRef>) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
+    this.formProduto.get('quantity')?.setValue(1);
+  }
 
   protected addToCart() {
     const quantity = this.formProduto.get('quantity')?.value;
-    this.product.quantity = quantity;
+    this.product.quantity = quantity + (this.product.quantity ?? 0);
     this.addToCartEmit.emit(this.product);
     this.changeModal.emit(true)
     this.modalService.dismissAll()

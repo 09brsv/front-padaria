@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, 
 import { FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { IOrder, IProduct, TValueChange } from 'src/app/pages/products/models';
 
 // const body = document.querySelector('body');
@@ -12,7 +13,6 @@ import { IOrder, IProduct, TValueChange } from 'src/app/pages/products/models';
   styleUrls: ['./modal-order.component.scss'],
 })
 export class ModalOrderComponent implements OnInit, OnChanges {
-[x: string]: any;
   statusModal = true;
   formOrder!: FormGroup;
   negativeIcon = faMinus;
@@ -23,44 +23,74 @@ export class ModalOrderComponent implements OnInit, OnChanges {
   @Input({ required: true }) order!: IOrder;
   @Output() mudouModal = new EventEmitter();
 
+  subscription: Subscription[] = [];
+
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['order']) {
+    if (changes['order'].currentValue) {
       const order = changes['order'].currentValue;
       this.formOrder?.patchValue({
         amount: order.amount,
         status: order.status,
       });
+      console.log(this.formOrder?.get('amount')?.value, order.amount)
       order.products.forEach((product: IProduct) => {
-        this.products.push(this.fb.group({
-          id: this.fb.control(product.id),
-          title: this.fb.control(product.title),
-          price: this.fb.control(product.price),
-          quantity: this.fb.control(product.quantity),
-        }))
+        const produtoGroup = this.products.findIndex((p: FormGroup) => p.get('id')?.value === product.id);
+        if (produtoGroup > -1) {
+          this.products.at(produtoGroup)?.patchValue({
+            quantity: product.quantity,
+            price: product.price
+          })
+        }
+        else {
+          this.products.push(this.fb.group({
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            quantity: product.quantity,
+          }))
+          this.handleValueChange(product)
+        }
       })
     }
   }
   ngOnInit(): void {
     this.formOrder = this.fb.group({
-      amount: this.fb.control(this.order.amount),
-      formatPayment: this.fb.control(this.order.formatPayment),
-      status: this.fb.control(this.order.status),
+      amount: this.order.amount,
+      formatPayment: this.order.formatPayment,
+      status: this.order.status,
       products: this.fb.array(
         this.order.products.map(product =>
           this.fb.group({
-            id: this.fb.control(product.id),
-            title: this.fb.control(product.title),
-            price: this.fb.control(product.price),
-            quantity: this.fb.control(product.quantity),
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            quantity: product.quantity,
           })
         )
       ),
     });
-    console.log(this.order)
+  }
+
+  handleValueChange(product: IProduct) {
+    if (this.subscription) {
+      this.subscription.map(sub => sub.unsubscribe());
+    }
+    this.products?.map(product => {
+      if (product.get('quantity') !== null) {
+        const quantity = product.get('quantity') as AbstractControl;
+        this.subscription.push(quantity.valueChanges.subscribe(val => {
+          const amount = this.products
+            .reduce((total: number, product: FormGroup) => total + (product.get('price')?.value * (product.get('quantity')?.value)), 0);
+          this.formOrder.get('amount')?.setValue(amount);
+        }))
+      }
+    })
+    this.products.find(p => p.get('id')?.value === product.id)?.get('quantity')?.setValue(product.quantity);
+
   }
   teste(u: any) {
     console.log(u)
@@ -71,7 +101,7 @@ export class ModalOrderComponent implements OnInit, OnChanges {
   }
 
   get products() {
-    return (this.formOrder.get('products') as FormArray).controls as FormGroup[];
+    return (this.formOrder?.get('products') as FormArray)?.controls as FormGroup[];
   }
 
   getProductGroup(control: AbstractControl) {
@@ -93,6 +123,7 @@ export class ModalOrderComponent implements OnInit, OnChanges {
       controlQuantity?.setValue(controlQuantity.value - 1);
     }
   }
+
 
   public getTotal(index: number): number {
     return this.getProductControl(index).get('price')?.value * this.getProductControl(index).get('quantity')?.value

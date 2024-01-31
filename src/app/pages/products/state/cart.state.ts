@@ -19,6 +19,14 @@ export class CartState {
   }
 
   add(product: IProduct) {
+    const indexProduct = this.cart.findIndex(p => p.id === product.id);
+    if (indexProduct > -1) {
+      const oldProduct = this.cart[indexProduct];
+      this.update({
+        ...oldProduct,
+      });
+      return;
+    }
     this._cart.next([...this.cart, product]);
   }
 
@@ -32,6 +40,9 @@ export class CartState {
   update(product: IProduct) {
     const cart = [...this.cart];
     const index = cart.findIndex(p => p.id === product.id);
+    if (index < 0) {
+      return this.add(product);
+    }
     cart[index] = product;
     this._cart.next(cart);
   }

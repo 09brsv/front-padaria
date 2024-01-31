@@ -12,6 +12,7 @@ export class ProductsService {
   constructor(private http: HttpClient) {
     this.products = [
       {
+        id: '1',
         title: 'Pão',
         description: 'Pão fresco',
         price: 299,
@@ -21,6 +22,7 @@ export class ProductsService {
         stock: 5,
       },
       {
+        id: '2',
         title: 'Pão Françês',
         description: 'Pão fresco',
         price: 299,
@@ -30,6 +32,7 @@ export class ProductsService {
         stock: 3,
       },
       {
+        id: '3',
         title: 'Pão Doce',
         description: 'Pão fresco',
         price: 299,
@@ -39,6 +42,7 @@ export class ProductsService {
         stock: 2,
       },
       {
+        id: '4',
         title: 'Sorvete',
         description: 'Sorvete de chocolate',
         price: 499,
@@ -52,7 +56,6 @@ export class ProductsService {
   }
 
   getAll(): Observable<IResponseProps<IProduct[]>> {
-    console.log('oi');
 
     this.http.get<IResponseProps<IProduct[]>>(this.environment);
     return of({ data: this.products, count: this.products.length });
