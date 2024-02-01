@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { IOrder, IProduct, TValueChange } from 'src/app/pages/products/models';
@@ -17,6 +18,8 @@ export class ModalOrderComponent implements OnInit, OnChanges {
   formOrder!: FormGroup;
   negativeIcon = faMinus;
   positiveIcon = faPlus;
+  removeIcon = faTrash;
+  whatsappIcon = faWhatsapp as IconDefinition;
 
   @ViewChild('content') content!: TemplateRef<ElementRef>;
   @Input() modalAberto!: boolean;
@@ -38,15 +41,17 @@ export class ModalOrderComponent implements OnInit, OnChanges {
       });
       console.log(this.formOrder?.get('amount')?.value, order.amount)
       order.products.forEach((product: IProduct) => {
-        const produtoGroup = this.products.findIndex((p: FormGroup) => p.get('id')?.value === product.id);
+        const produtoGroup = this.products.controls.findIndex(p => p.get('id')?.value === product.id);
         if (produtoGroup > -1) {
-          this.products.at(produtoGroup)?.patchValue({
+          console.log("🚀 ~ ModalOrderComponent ~ order.products.forEach ~ produtoGroup:", produtoGroup)
+          this.products.controls.at(produtoGroup)?.patchValue({
             quantity: product.quantity,
             price: product.price
           })
+          console.log('teste')
         }
         else {
-          this.products.push(this.fb.group({
+          this.products.controls.push(this.fb.group({
             id: product.id,
             title: product.title,
             price: product.price,
@@ -75,25 +80,22 @@ export class ModalOrderComponent implements OnInit, OnChanges {
     });
   }
 
-  handleValueChange(product: IProduct) {
-    if (this.subscription) {
+  handleValueChange(prod: IProduct) {
+    if (this.subscription.length) {
       this.subscription.map(sub => sub.unsubscribe());
     }
-    this.products?.map(product => {
+    this.products?.controls.map(product => {
       if (product.get('quantity') !== null) {
         const quantity = product.get('quantity') as AbstractControl;
         this.subscription.push(quantity.valueChanges.subscribe(val => {
-          const amount = this.products
-            .reduce((total: number, product: FormGroup) => total + (product.get('price')?.value * (product.get('quantity')?.value)), 0);
+          const amount = this.products.controls.reduce((total: number, product) => total + (product.get('price')?.value * (product.get('quantity')?.value)), 0)
           this.formOrder.get('amount')?.setValue(amount);
+          console.log(amount)
         }))
       }
     })
-    this.products.find(p => p.get('id')?.value === product.id)?.get('quantity')?.setValue(product.quantity);
+    this.products.controls.find(p => p.get('id')?.value === prod.id)?.get('quantity')?.setValue(prod.quantity);
 
-  }
-  teste(u: any) {
-    console.log(u)
   }
 
   open(content: TemplateRef<ElementRef>) {
@@ -101,7 +103,7 @@ export class ModalOrderComponent implements OnInit, OnChanges {
   }
 
   get products() {
-    return (this.formOrder?.get('products') as FormArray)?.controls as FormGroup[];
+    return this.formOrder?.get('products') as FormArray
   }
 
   getProductGroup(control: AbstractControl) {
@@ -109,7 +111,7 @@ export class ModalOrderComponent implements OnInit, OnChanges {
   }
 
   getProductControl(index: number) {
-    return this.products.at(index) as FormGroup;
+    return this.products.controls.at(index) as FormGroup;
   }
 
   changeProductValue(handle: TValueChange, index: number) {
@@ -124,6 +126,11 @@ export class ModalOrderComponent implements OnInit, OnChanges {
     }
   }
 
+  removeProduct(index: number) {
+    this.products.removeAt(index);
+    this.handleValueChange(this.products.at(index).value);
+    // todo facade emit product
+  }
 
   public getTotal(index: number): number {
     return this.getProductControl(index).get('price')?.value * this.getProductControl(index).get('quantity')?.value

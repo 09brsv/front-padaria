@@ -1,54 +1,70 @@
 <ng-template #content let-modal *ngIf="statusModal && formOrder && products">
   <div class="card" [formGroup]="formOrder">
+    <div class="titulo border-1 border-black">
+      <h3>Carrinho de compras</h3>
+    </div>
     <div
       class="modal-body"
       formArrayName="products"
-      *ngFor="let product of products; let i = index">
+      *ngFor="let product of products.controls; let i = index">
       <div
-        class="titulo form-group border-1 border-black"
-        [formGroup]="product">
-        <div class="row">
-          <div class="col col-4">
-            {{ product.get('title')?.value }}
+        class="row align-items-baseline"
+        [formGroup]="getProductGroup(product)">
+        <div class="col col-1">
+          <span
+            ><fa-icon [icon]="removeIcon" (click)="removeProduct(i)"></fa-icon
+          ></span>
+        </div>
+        <div class="col col-11 col-md-4">
+          {{ product.get('title')?.value }}
+        </div>
+        <div class="col col-12 col-md-4">
+          <div class="d-flex align-items-center gap-4">
+            <span class="button-quantity">
+              <fa-icon
+                [icon]="negativeIcon"
+                (click)="changeProductValue('decrement', i)"></fa-icon>
+            </span>
+            <input
+              type="number"
+              formControlName="quantity"
+              min="0"
+              max="1000"
+              class="form-control" />
+            <span class="button-quantity">
+              <fa-icon
+                [icon]="positiveIcon"
+                (click)="changeProductValue('increment', i)"></fa-icon>
+            </span>
           </div>
-          <div class="col col-4">
-            <div class="d-flex align-items-center gap-4">
-              <span class="button-quantity">
-                <fa-icon
-                  [icon]="negativeIcon"
-                  (click)="changeProductValue('decrement', i)"></fa-icon>
-              </span>
-              <input
-                type="number"
-                formControlName="quantity"
-                min="0"
-                max="1000"
-                class="form-control" />
-              <span class="button-quantity">
-                <fa-icon
-                  [icon]="positiveIcon"
-                  (click)="changeProductValue('increment', i)"></fa-icon>
-              </span>
-            </div>
-          </div>
-          <div class="col col-4 g-3 align-items-end">
-            <span
-              >Total: <strong>{{ getTotal(i) | currency }}</strong></span
-            >
-          </div>
+        </div>
+        <div class="col col-12 col-md-3 g-3 text-end">
+          <span
+            ><strong>{{ getTotal(i) | currency }}</strong></span
+          >
         </div>
       </div>
     </div>
+    <div class="row my-3">
+      <div class="col col-12 text-end">
+        <span
+          >Total:
+          <strong>{{ formOrder.get('amount')?.value | currency }}</strong></span
+        >
+      </div>
+    </div>
     <div class="row">
-      <div class="col col-12 justify-content-end">
-        {{ formOrder.get('amount')?.value | currency }}
+      <div class="col">
+        <div class="form-group text-end">
+          <button
+            class="btn btn-success"
+            style="width: inherit"
+            (click)="closeOrder()">
+            Enviar pedido para whatsapp
+            <fa-icon class="ms-2" [icon]="whatsappIcon" [size]="'2x'"></fa-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <button class="btn btn-success" (click)="closeOrder()">
-      Enviar pedido
-    </button>
-  </div>
-  <div class="overlay"></div>
 </ng-template>
