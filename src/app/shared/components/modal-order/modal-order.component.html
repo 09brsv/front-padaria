@@ -1,10 +1,18 @@
 <ng-template #content let-modal *ngIf="statusModal && formOrder && products">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Carrinho de compras</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
   <div class="card" [formGroup]="formOrder">
-    <div class="titulo border-1 border-black">
-      <h3>Carrinho de compras</h3>
+    <div class="row col-12 text-end">
+      <b>Valor</b>
     </div>
     <div
-      class="modal-body"
+      class="modal-body mb-5"
       formArrayName="products"
       *ngFor="let product of products.controls; let i = index">
       <div
@@ -15,10 +23,10 @@
             ><fa-icon [icon]="removeIcon" (click)="removeProduct(i)"></fa-icon
           ></span>
         </div>
-        <div class="col col-11 col-md-4">
+        <div class="col col-4">
           {{ product.get('title')?.value }}
         </div>
-        <div class="col col-12 col-md-4">
+        <div class="col col-4">
           <div class="d-flex align-items-center gap-4">
             <span class="button-quantity">
               <fa-icon
@@ -38,10 +46,23 @@
             </span>
           </div>
         </div>
-        <div class="col col-12 col-md-3 g-3 text-end">
+        <div class="col col-3 g-3 text-end">
           <span
             ><strong>{{ getTotal(i) | currency }}</strong></span
           >
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-12">
+        <div class="form-group">
+          <div>
+            <input
+              type="text"
+              formControlName="description"
+              placeholder="Escreva sua observação (opcional)"
+              class="form-control" />
+          </div>
         </div>
       </div>
     </div>
@@ -53,12 +74,12 @@
         >
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <div class="form-group text-end">
+    <div class="modal-footer">
+      <div class="col col-12">
+        <div class="form-group">
           <button
             class="btn btn-success"
-            style="width: inherit"
+            style="width: -webkit-fill-available;"
             (click)="closeOrder()">
             Enviar pedido para whatsapp
             <fa-icon class="ms-2" [icon]="whatsappIcon" [size]="'2x'"></fa-icon>
