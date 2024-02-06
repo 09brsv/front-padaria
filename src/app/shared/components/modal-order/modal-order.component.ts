@@ -25,6 +25,8 @@ export class ModalOrderComponent implements OnInit, OnChanges {
   @Input() modalAberto!: boolean;
   @Input({ required: true }) order!: IOrder;
   @Output() mudouModal = new EventEmitter();
+  @Output() productChange = new EventEmitter<string>();
+  @Output() orderSendChange = new EventEmitter<IOrder>();
 
   subscription: Subscription[] = [];
 
@@ -33,22 +35,21 @@ export class ModalOrderComponent implements OnInit, OnChanges {
     private modalService: NgbModal
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['order'].currentValue) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    if (changes.order?.currentValue) {
       const order = changes['order'].currentValue;
       this.formOrder?.patchValue({
         amount: order.amount,
         status: order.status,
       });
-      console.log(this.formOrder?.get('amount')?.value, order.amount)
       order.products.forEach((product: IProduct) => {
         const produtoGroup = this.products.controls.findIndex(p => p.get('id')?.value === product.id);
         if (produtoGroup > -1) {
-          console.log("🚀 ~ ModalOrderComponent ~ order.products.forEach ~ produtoGroup:", produtoGroup)
           this.products.controls.at(produtoGroup)?.patchValue({
             quantity: product.quantity,
             price: product.price
           })
-          console.log('teste')
         }
         else {
           this.products.controls.push(this.fb.group({
@@ -67,6 +68,7 @@ export class ModalOrderComponent implements OnInit, OnChanges {
       amount: this.order.amount,
       formatPayment: this.order.formatPayment,
       status: this.order.status,
+      description: this.order.description,
       products: this.fb.array(
         this.order.products.map(product =>
           this.fb.group({
@@ -90,7 +92,6 @@ export class ModalOrderComponent implements OnInit, OnChanges {
         this.subscription.push(quantity.valueChanges.subscribe(val => {
           const amount = this.products.controls.reduce((total: number, product) => total + (product.get('price')?.value * (product.get('quantity')?.value)), 0)
           this.formOrder.get('amount')?.setValue(amount);
-          console.log(amount)
         }))
       }
     })
@@ -127,9 +128,9 @@ export class ModalOrderComponent implements OnInit, OnChanges {
   }
 
   removeProduct(index: number) {
+    const product = this.products.controls[index].value;
     this.products.removeAt(index);
-    this.handleValueChange(this.products.at(index).value);
-    // todo facade emit product
+    this.productChange.emit(product.id)
   }
 
   public getTotal(index: number): number {
@@ -149,11 +150,16 @@ export class ModalOrderComponent implements OnInit, OnChanges {
   }
 
   closeOrder() {
-    if (this.formOrder.valid) {
+    if (!this.formOrder.valid) {
+      return window.alert('Por favor, preencha todos os campos');
+    }
+
+    const order: IOrder = this.formOrder.getRawValue()
+    order.date = new Date();
+    this.orderSendChange.emit(order)
+    console.log(order)
       this.fecharModal();
       window.alert('Seu pedido foi concluído com sucesso!');
       return;
-    }
-    console.log(this.formOrder);
   }
 }

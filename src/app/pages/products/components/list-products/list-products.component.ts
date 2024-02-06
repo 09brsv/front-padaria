@@ -54,6 +54,10 @@ export class ListProductsComponent {
     )
   );
 
+  removeProduct(id: string) {
+    this.productsFacade.removeFromCart(id);
+  }
+
   onModalChange() {
     console.log('dsada')
     this.modalAberto = !this.modalAberto;
@@ -61,5 +65,10 @@ export class ListProductsComponent {
 
   openModalOrder() {
     this.order && this.modalOrder.open(this.modalOrder.content);
+  }
+
+  sendOrder(order: IOrder) {
+    this.productsFacade.sendOrder(order);
+    this.modalAberto = false
   }
 }

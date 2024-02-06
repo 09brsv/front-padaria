@@ -1,7 +1,7 @@
 <section class="container">
   <header>Que produto você procura?</header>
   <div class="inputs">
-      <input type="search" class="form-control" [formControl]="fieldSearch" />
+    <input type="search" class="form-control" [formControl]="fieldSearch" />
     <button>
       <fa-icon [icon]="searchIcon"></fa-icon>
     </button>
@@ -14,27 +14,41 @@
     <div
       class="container-card row-card"
       *ngIf="resultProducts$ | async as result; else telaInicial">
-        <div *ngFor="let product of listProducts">
-          <app-product [product]="product" (modalChangeProduct)="onModalChange()"></app-product>
-        </div>
+      <div *ngFor="let product of listProducts">
+        <app-product
+          [product]="product"
+          (modalChangeProduct)="onModalChange()"></app-product>
       </div>
     </div>
-    <ng-template #telaInicial>
-      <div *ngFor="let product of productsFacade.products$ | async">
-        <div *ngIf="product">
-          <app-product [product]="product" (modalChangeProduct)="onModalChange()"></app-product>
-        </div>
-      </div>
-    </ng-template>
-    <div class="cesta" *ngIf="(productsFacade.cart$ | async)?.length as basketLength">
-      <div class="position-relative">
-        <button class="bg-white border-0" (click)="openModalOrder()">
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{basketLength}}</span>
-          <fa-icon [icon]="basketIcon" size="lg"></fa-icon>
-        </button>
+  </div>
+  <ng-template #telaInicial>
+    <div *ngFor="let product of productsFacade.products$ | async">
+      <div *ngIf="product">
+        <app-product
+          [product]="product"
+          (modalChangeProduct)="onModalChange()"></app-product>
       </div>
     </div>
-    <div *ngIf="order">
-      <app-modal-order #modalOrder [modalAberto]="modalAberto" [order]="order"></app-modal-order>
+  </ng-template>
+  <div
+    class="cesta"
+    *ngIf="(productsFacade.cart$ | async)?.length as basketLength">
+    <div class="position-relative">
+      <button class="bg-white border-0" (click)="openModalOrder()">
+        <span
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >{{ basketLength }}</span
+        >
+        <fa-icon [icon]="basketIcon" size="lg"></fa-icon>
+      </button>
     </div>
+  </div>
+  <div *ngIf="order">
+    <app-modal-order
+      #modalOrder
+      [modalAberto]="modalAberto"
+      (productChange)="removeProduct($event)"
+      (orderSendChange)="sendOrder($event)"
+      [order]="order"></app-modal-order>
+  </div>
 </section>

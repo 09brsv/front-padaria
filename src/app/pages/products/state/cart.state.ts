@@ -30,9 +30,9 @@ export class CartState {
     this._cart.next([...this.cart, product]);
   }
 
-  remove(product: IProduct) {
+  remove(id: string) {
     const cart = [...this.cart];
-    const index = cart.findIndex(p => p.id === product.id);
+    const index = cart.findIndex(p => p.id === id);
     cart.splice(index, 1);
     this._cart.next(cart);
   }
