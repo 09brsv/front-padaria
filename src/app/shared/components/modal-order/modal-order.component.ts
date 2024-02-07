@@ -139,14 +139,8 @@ export class ModalOrderComponent implements OnInit, OnChanges {
 
   fecharModal() {
     this.statusModal = false;
-    this.mudouModal.emit(this.statusModal);
+    this.modalService.dismissAll();
     // body.style.overflow = "scroll"
-  }
-
-  esconderScroll() {
-    if (this.statusModal == true) {
-      // body.style.overflow = "hidden";
-    }
   }
 
   closeOrder() {

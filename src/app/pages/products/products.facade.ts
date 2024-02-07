@@ -24,14 +24,14 @@ export class ProductsFacade {
   }
 
   addToCart(product: IProduct) {
-    this.cartState.add(product);
+    this.cartState.add(product as Required<Pick<IProduct, "quantity">> & IProduct);
   }
 
   removeFromCart(id: string) {
     this.cartState.remove(id);
   }
 
-  updateProductFromCart(product: IProduct) {
+  updateProductFromCart(product: Required<Pick<IProduct, "quantity">> & IProduct) {
     this.cartState.update(product);
   }
 
@@ -40,6 +40,7 @@ export class ProductsFacade {
     const message = this.sendProductListViaWhatsApp(order);
     const numberWhatsapp = '5533999024143'
     const urlParams = encodeURIComponent(message);
+
     const whatsappUrl = `https://wa.me/${numberWhatsapp}?text=${urlParams}`
     window.open(whatsappUrl, '_blank');
   }
@@ -52,12 +53,12 @@ export class ProductsFacade {
     return productListString;
 }
 
-private readonly sendProductListViaWhatsApp = (order: IOrder): string => {
-  let message = `Status do Pedido: ${order.status}\n\n`;
-  message += `${order.description ? `Descrição: ${order.description}\n` : ''}Você está comprando ${order.products.length} produtos: \n
-  `;
+  private readonly sendProductListViaWhatsApp = (order: IOrder): string => {
+  const dateBr = order.date?.toLocaleDateString('pt-BR');
+  let message = `Status: ${order.status}\nData: ${dateBr}\n\n`;
+  message += `${order.description ? `Descrição: ${order.description}\n` : ''}Eu escolhi *${order.products.length} produto${order.products.length > 1 ? 's' : ''}*\n\n`;
   if (order.products.length > 0) {
-      message += `${this.formatProductList(order.products)}\nTotal: ${this.formatterBRL.format(order.amount)}`;
+      message += `${this.formatProductList(order.products)}\n*TOTAL: ${this.formatterBRL.format(order.amount)}*`;
   } else {
       message += 'Não há produtos na lista.';
   }
