@@ -9,10 +9,11 @@ export enum EUnit {
 }
 
 export enum ECategory {
-  'Pães e bolos' = 'Pães e bolos',
-  'Doces' = 'Doces',
-  'Sorvetes' = 'Sorvetes',
-  'Salgados' = 'Salgados',
+  'Breads and cakes' = 'Pães e bolos',
+  'candies' = 'Doces',
+  'ice creams' = 'Sorvetes',
+  'snacks' = 'Salgados',
+  'cookies' = 'Biscoitos',
 }
 
 type IUnit = 'KG' | 'UN' | 'ML' | 'L' | 'CX' | 'PÇ' | 'G';

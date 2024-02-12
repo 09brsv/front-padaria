@@ -13,22 +13,37 @@
   <div class="row-card">
     <div
       class="container-card row-card"
-      *ngIf="resultProducts$ | async as result; else telaInicial">
-      <div *ngFor="let product of listProducts">
+      *ngIf="resultProducts$ | async; else telaInicial">
+      <ng-container
+        *ngFor="let product of listProducts; let i = index"
+        class="category">
+        <div
+          *ngIf="i === 0 || listProducts[i - 1].category !== product.category"
+          style="width: 100%; text-align: center;">
+          <h2>{{ product.category }}</h2>
+        </div>
         <app-product
           [product]="product"
           (modalChangeProduct)="onModalChange()"></app-product>
-      </div>
+      </ng-container>
     </div>
   </div>
   <ng-template #telaInicial>
-    <div *ngFor="let product of productsFacade.products$ | async">
-      <div *ngIf="product">
-        <app-product
-          [product]="product"
-          (modalChangeProduct)="onModalChange()"></app-product>
+    <ng-container
+      *ngFor="
+        let product of productsFacade.products$ | async as products;
+        let i = index
+      "
+      class="category">
+      <div
+        *ngIf="i === 0 || products[i - 1].category !== product.category"
+        style="width: 100%; text-align: center;">
+        <h2>{{ product.category }}</h2>
       </div>
-    </div>
+      <app-product
+        [product]="product"
+        (modalChangeProduct)="onModalChange()"></app-product>
+    </ng-container>
   </ng-template>
   <div
     class="cesta"

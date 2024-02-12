@@ -18,7 +18,9 @@ export class ProductsFacade {
   getAllProducts() {
     this.api.getAll().subscribe({
       next: res => {
-        this.state.products = res.data;
+        this.state.products = res.data
+        .sort((a, b) => a.title.localeCompare(b.title))
+        .sort((a, b) => a.category.localeCompare(b.category));
       },
     });
   }
