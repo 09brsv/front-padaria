@@ -51,7 +51,7 @@
     class="cesta"
     *ngIf="(productsFacade.cart$ | async)?.length as basketLength">
     <div class="position-relative">
-      <button class="bg-white border-0" (click)="openModalOrder()">
+      <button class="border-0" style="background: none" (click)="openModalOrder()">
         <span
           class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
           >{{ basketLength }}</span
