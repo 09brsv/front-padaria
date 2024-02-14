@@ -9,9 +9,9 @@
   </div>
   <div class="modal-body" *ngIf="formProduto">
     <div class="d-flex justify-content-between">
-      <div>
+      <div class="content-info-product">
         <img src="{{ product.image }}" alt="{{ product.title }}" />
-        <p>{{ product.description }}</p>
+        <p class="py-2">{{ product.description }}</p>
       </div>
       <div class="content-form">
         <form [formGroup]="formProduto">
@@ -43,12 +43,12 @@
                   </button>
                 </div>
               </div>
-              <div class="row g-3 align-items-end">
-                <span>Total: <strong>{{formProduto.get('total')?.value | currency}}</strong></span>
-              </div>
             </div>
           </div>
         </form>
+        <div class="row g-3 align-items-end" style="padding-block-start: 50%;">
+          <span>Total: <strong>{{formProduto.get('total')?.value | currency}}</strong></span>
+        </div>
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
-<div class="card">
-  <div>
+<div class="card" (click)="abrirModal()" (keypress)="abrirModal()" tabindex="0">
+  <div class="card-img">
     <img
       src="{{
         product.image !== undefined
@@ -9,13 +9,13 @@
       alt="Capa do livro" />
   </div>
   <div class="card-body info-card">
-    <h3 class="card-title title">{{ product.title }}</h3>
-    <p class="card-text">{{ product.description | slice: 0 : 15 }}...</p>
+    <h3 class="card-title">{{ product.title }}</h3>
+    <p class="card-text">{{ product.description }}</p>
     <div class="price-qtd">
       <strong class="card-text"
         >R${{ product.price }}/{{ product.measurementUnit | lowercase }}</strong
       >
-      <button style="margin-right: 12px" (click)="abrirModal()">
+      <button style="margin-right: 12px">
         +
       </button>
     </div>

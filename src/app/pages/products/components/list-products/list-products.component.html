@@ -16,10 +16,11 @@
       *ngIf="resultProducts$ | async; else telaInicial">
       <ng-container
         *ngFor="let product of listProducts; let i = index"
-        class="category">
+        >
         <div
           *ngIf="i === 0 || listProducts[i - 1].category !== product.category"
-          style="width: 100%; text-align: center;">
+          class="category"
+          >
           <h2>{{ product.category }}</h2>
         </div>
         <app-product
@@ -34,10 +35,11 @@
         let product of productsFacade.products$ | async as products;
         let i = index
       "
-      class="category">
+      >
       <div
         *ngIf="i === 0 || products[i - 1].category !== product.category"
-        style="width: 100%; text-align: center;">
+        class="category"
+        >
         <h2>{{ product.category }}</h2>
       </div>
       <app-product
