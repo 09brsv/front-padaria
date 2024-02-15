@@ -5,11 +5,26 @@
   border-radius: 8px 14px 14px 8px;
   height: 150px;
   width: 300px;
+  overflow-x: hidden;
   cursor: pointer;
 
   &:hover {
     scale: 1.05;
   }
+
+  &:hover .card-img {
+    transform: translateX(-300px);
+    transition: 1s ease-in-out;
+    width: 0;
+    opacity: 0.3;
+  }
+
+  &:hover .info-card {
+    width: 100%;
+    justify-content: left;
+    transition: .8s ease-in-out;
+  }
+
   & .card-img {
     width: 40%;
     height: 100%;

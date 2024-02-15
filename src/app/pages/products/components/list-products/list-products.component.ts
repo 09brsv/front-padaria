@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ProductsFacade } from '../../products.facade';
-import { distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
+import { Observable, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { EStatus, IOrder, IProduct } from '../../models';
 import { ProductsState } from '../../state/products.state';
@@ -16,13 +16,11 @@ import { ModalOrderComponent } from 'src/app/shared/components/modal-order/modal
 export class ListProductsComponent {
   listProducts!: IProduct[];
   order?: IOrder;
-  fieldSearch = new FormControl();
   errorMsg = '';
-  searchIcon = faMagnifyingGlass;
   basketIcon = faBasketShopping;
 
   @ViewChild('modalOrder') modalOrder!: ModalOrderComponent;
-
+  resultProducts$?: Observable<IProduct[]>;
   modalAberto = false;
   constructor(public productsFacade: ProductsFacade) {
     productsFacade.getAllProducts();
@@ -37,22 +35,25 @@ export class ListProductsComponent {
     })
   }
 
-  resultProducts$ = this.fieldSearch.valueChanges.pipe(
-    distinctUntilChanged(),
-    switchMap((val: string) =>
-      this.productsFacade.products$.pipe(
-        filter(products => products.length > 0),
-        map(products =>
-          products.filter(
-            product =>
-              product.title.toLowerCase().includes(val.toLowerCase()) ||
-              product.title.toLowerCase().includes(val.toLowerCase())
-          )
-        ),
-        tap(val => (this.listProducts = val))
+  onSearchChange(obs: Observable<string | undefined>) {
+    this.resultProducts$ = obs.pipe(
+      distinctUntilChanged(),
+      map(val => (val ? val : '')),
+      switchMap((val: string) =>
+        this.productsFacade.products$.pipe(
+          filter(products => products.length > 0),
+          map(products =>
+            products.filter(
+              product =>
+                product.title.toLowerCase().includes(val.toLowerCase()) ||
+                product.title.toLowerCase().includes(val.toLowerCase())
+            )
+          ),
+          tap(val => (this.listProducts = val))
+        )
       )
-    )
-  );
+    );
+  }
 
   removeProduct(id: string) {
     this.productsFacade.removeFromCart(id);

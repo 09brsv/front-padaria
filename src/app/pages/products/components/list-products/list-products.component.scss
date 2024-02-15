@@ -1,9 +1,10 @@
-.row-card{
+.row-card {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
   gap: 4rem 3rem;
 }
+
 .overlay-div {
   background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
@@ -23,44 +24,9 @@
   text-decoration: underline;
 }
 
-.inputs{
-  position: relative;
-  display: flex;
-  margin: 2rem auto;
- }
 
-.form-control {
-    width: max-content;
-    text-indent: 15px;
-    border: none;
-    height: 45px;
-    border-radius: 0px;
-    border-bottom: 1px solid #eee;
-}
-
-.form-control:focus {
-  color: #495057;
-  background-color: #fff;
-  border-color: #eee;
-  outline: 0;
-  box-shadow: none;
-  border-bottom: 1px solid blue;
-}
-
-
-.form-control:focus  {
-  color: blue;
-}
-
- .inputs i{
-  position: absolute;
-  top: 14px;
-  left: 4px;
-  color: #b8b9bc;
- }
-
- .cesta {
+.cesta {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
- }
+}

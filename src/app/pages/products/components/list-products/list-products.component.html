@@ -1,15 +1,5 @@
+<app-header (searchChange)="onSearchChange($event)"></app-header>
 <section class="container">
-  <header>Que produto você procura?</header>
-  <div class="inputs">
-    <input type="search" class="form-control" [formControl]="fieldSearch" />
-    <button>
-      <fa-icon [icon]="searchIcon"></fa-icon>
-    </button>
-  </div>
-  <p>Busque por nome ou categoria...</p>
-  <div class="resultados mensagem-erro" *ngIf="errorMsg">
-    {{ errorMsg }}
-  </div>
   <div class="row-card">
     <div
       class="container-card row-card"
@@ -69,3 +59,4 @@
       [order]="order"></app-modal-order>
   </div>
 </section>
+<app-footer></app-footer>

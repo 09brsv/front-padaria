@@ -13,29 +13,55 @@
 //   src: url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap');
 // }
 :root {
-  font-family: "Open Sans", sans-serif!important;
+  font-family: "Open Sans", sans-serif !important;
   font-weight: 500;
   font-optical-sizing: auto;
+  --primary-color: rgb(71, 47, 47)
 }
 
-body {
-  position: relative;
-  font-family: "Open Sans", sans-serif!important;
+html {
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
 
-  &::before {
-    content : "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: url('assets/images/background.jpg') center center no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-    opacity : 0.2;
+  &::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #555;
+  }
+
+  & body {
+    position: relative;
+    font-family: "Open Sans", sans-serif !important;
+    min-height: 100vh;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: url('assets/images/background.jpg') center center no-repeat;
+      background-size: cover;
+      width: 100%;
+      height: 100%;
+      opacity: 0.2;
+    }
   }
 }
 
-h2, h3, h4, h5, h6 {
+
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 600;
 }
