@@ -8,7 +8,7 @@
       (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body" *ngIf="formProduto">
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between gap-3">
       <div class="content-info-product">
         <img src="{{ product.image }}" alt="{{ product.title }}" />
         <p class="py-2">{{ product.description }}</p>
@@ -46,7 +46,7 @@
             </div>
           </div>
         </form>
-        <div class="row g-3 align-items-end" style="padding-block-start: 50%;">
+        <div class="row g-3 align-items-end product-total">
           <span>Total: <strong>{{formProduto.get('total')?.value | currency}}</strong></span>
         </div>
       </div>

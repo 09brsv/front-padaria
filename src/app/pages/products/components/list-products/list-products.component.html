@@ -1,62 +1,71 @@
-<app-header (searchChange)="onSearchChange($event)"></app-header>
-<section class="container">
-  <div class="row-card">
-    <div
-      class="container-card row-card"
-      *ngIf="resultProducts$ | async; else telaInicial">
+<div class="body">
+  <app-header (searchChange)="onSearchChange($event)"></app-header>
+  <section class="container">
+    <div class="row-card">
       <ng-container
-        *ngFor="let product of listProducts; let i = index"
-        >
-        <div
-          *ngIf="i === 0 || listProducts[i - 1].category !== product.category"
-          class="category"
-          >
-          <h2>{{ product.category }}</h2>
-        </div>
-        <app-product
-          [product]="product"
-          (modalChangeProduct)="onModalChange()"></app-product>
+        *ngIf="resultProducts$ | async as resultProducts; else telaInicial">
+        <ng-container
+          *ngTemplateOutlet="
+            displayProducts;
+            context: {
+              $implicit: resultProducts
+            }
+          "></ng-container>
       </ng-container>
+
+      <ng-template #telaInicial>
+        <ng-container
+          *ngTemplateOutlet="
+            displayProducts;
+            context: {
+              $implicit: (productsFacade.products$ | async)
+            }
+          "></ng-container>
+      </ng-template>
     </div>
-  </div>
-  <ng-template #telaInicial>
-    <ng-container
-      *ngFor="
-        let product of productsFacade.products$ | async as products;
-        let i = index
-      "
-      >
-      <div
-        *ngIf="i === 0 || products[i - 1].category !== product.category"
-        class="category"
-        >
-        <h2>{{ product.category }}</h2>
+
+    <ng-template #displayProducts let-products>
+      <ng-container *ngIf="products[0]; else empty">
+        <ng-container *ngFor="let product of products; let i = index">
+          <div
+            *ngIf="i === 0 || products[i - 1]?.category !== product.category"
+            class="category">
+            <h2>{{ product.category }}</h2>
+          </div>
+          <app-product
+            [product]="product"
+            (modalChangeProduct)="onModalChange()"></app-product>
+        </ng-container>
+      </ng-container>
+      <ng-template #empty>
+        <strong style="transform: translateX(20%);">Nenhum produto encontrado</strong>
+      </ng-template>
+    </ng-template>
+
+    <div
+      class="cesta"
+      *ngIf="(productsFacade.cart$ | async)?.length as basketLength">
+      <div class="position-relative">
+        <button
+          class="border-0"
+          style="background: none"
+          (click)="openModalOrder()">
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            >{{ basketLength }}</span
+          >
+          <fa-icon [icon]="basketIcon" size="lg"></fa-icon>
+        </button>
       </div>
-      <app-product
-        [product]="product"
-        (modalChangeProduct)="onModalChange()"></app-product>
-    </ng-container>
-  </ng-template>
-  <div
-    class="cesta"
-    *ngIf="(productsFacade.cart$ | async)?.length as basketLength">
-    <div class="position-relative">
-      <button class="border-0" style="background: none" (click)="openModalOrder()">
-        <span
-          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-          >{{ basketLength }}</span
-        >
-        <fa-icon [icon]="basketIcon" size="lg"></fa-icon>
-      </button>
     </div>
-  </div>
-  <div *ngIf="order">
-    <app-modal-order
-      #modalOrder
-      [modalAberto]="modalAberto"
-      (productChange)="removeProduct($event)"
-      (orderSendChange)="sendOrder($event)"
-      [order]="order"></app-modal-order>
-  </div>
-</section>
-<app-footer></app-footer>
+    <div *ngIf="order">
+      <app-modal-order
+        #modalOrder
+        [modalAberto]="modalAberto"
+        (productChange)="removeProduct($event)"
+        (orderSendChange)="sendOrder($event)"
+        [order]="order"></app-modal-order>
+    </div>
+  </section>
+  <app-footer></app-footer>
+</div>

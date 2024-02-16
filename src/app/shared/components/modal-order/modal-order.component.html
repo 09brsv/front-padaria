@@ -8,7 +8,7 @@
       (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="card" [formGroup]="formOrder">
-    <div class="row col-12 text-end">
+    <div class="w-full text-end pe-2">
       <b>Valor</b>
     </div>
     <div
@@ -24,7 +24,7 @@
           ></span>
         </div>
         <div class="col col-4">
-          {{ product.get('title')?.value }}
+          <span>{{ product.get('title')?.value }}</span>
         </div>
         <div class="col col-4">
           <div class="d-flex align-items-center gap-4">
@@ -79,7 +79,7 @@
         <div class="form-group">
           <button
             class="btn btn-success"
-            style="width: -webkit-fill-available;"
+            style="width: -webkit-fill-available"
             (click)="closeOrder()">
             Enviar pedido para whatsapp
             <fa-icon class="ms-2" [icon]="whatsappIcon" [size]="'2x'"></fa-icon>

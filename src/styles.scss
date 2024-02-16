@@ -65,3 +65,9 @@ h5,
 h6 {
   font-weight: 600;
 }
+
+@media screen and (max-width: 768px) {
+  p, span, strong, input::placeholder {
+    font-size: 0.9em;
+  }
+}
