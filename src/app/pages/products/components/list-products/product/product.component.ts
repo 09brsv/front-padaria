@@ -14,16 +14,11 @@ export class ProductComponent {
   modalAberto!: boolean;
 
   @Input({ required: true }) product!: IProduct;
-  @Output() modalChangeProduct = new EventEmitter();
 
   @ViewChild('modalProduct') modalProduct!: ModalProductComponent;
 
   constructor(@Host() public readonly productsFacade: ProductsFacade ) {}
 
-  onModalChange(fade: boolean) {
-    this.modalAberto = fade;
-    this.modalChangeProduct.emit();
-  }
   abrirModal() {
     this.modalProduct.open(this.modalProduct.content);
   }

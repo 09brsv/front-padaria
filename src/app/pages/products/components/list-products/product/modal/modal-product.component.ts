@@ -13,9 +13,6 @@ import { CartState } from 'src/app/pages/products/state/cart.state';
 })
 export class ModalProductComponent implements OnInit {
   @Input({ required: true }) product!: IProduct;
-  @Input() modalAberto?: boolean;
-  statusModal = true;
-  @Output() changeModal = new EventEmitter<boolean>();
   @Output() addToCartEmit = new EventEmitter<IProduct>();
 
   @ViewChild('content') content!: TemplateRef<ElementRef>;
@@ -65,7 +62,6 @@ export class ModalProductComponent implements OnInit {
     const quantity = this.formProduto.get('quantity')?.value;
     this.product.quantity = quantity + (this.product.quantity ?? 0);
     this.addToCartEmit.emit(this.product);
-    this.changeModal.emit(true)
     this.modalService.dismissAll()
   }
 }

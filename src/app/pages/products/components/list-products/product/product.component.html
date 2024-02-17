@@ -15,15 +15,11 @@
       <strong class="card-text"
         >R${{ product.price }}/{{ product.measurementUnit | lowercase }}</strong
       >
-      <button style="margin-right: 12px">
-        +
-      </button>
+      <button style="margin-right: 12px">+</button>
     </div>
   </div>
 </div>
 <app-modal-product
   #modalProduct
   [product]="product"
-  [modalAberto]="modalAberto"
-  (addToCartEmit)="onAddToCart($event)"
-  (changeModal)="onModalChange($event)"></app-modal-product>
+  (addToCartEmit)="onAddToCart($event)"></app-modal-product>

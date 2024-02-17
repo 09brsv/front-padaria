@@ -31,7 +31,6 @@ export class ListProductsComponent {
         products: res,
         status: EStatus.pendente
       }
-      console.log(res)
     })
   }
 
@@ -59,10 +58,6 @@ export class ListProductsComponent {
     this.productsFacade.removeFromCart(id);
   }
 
-  onModalChange() {
-    console.log('dsada')
-    this.modalAberto = !this.modalAberto;
-  }
 
   openModalOrder() {
     this.order && this.modalOrder.open(this.modalOrder.content);
@@ -70,6 +65,6 @@ export class ListProductsComponent {
 
   sendOrder(order: IOrder) {
     this.productsFacade.sendOrder(order);
-    this.modalAberto = false
+    this.modalOrder.close()
   }
 }
