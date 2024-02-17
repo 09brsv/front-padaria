@@ -8,11 +8,9 @@
   }
 
   & .product-total {
-    padding-block-start: 50%;
-
-    @media screen and (max-width: 768px) {
-      padding-block-start: 80%;
-    }
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
   }
 
 }
