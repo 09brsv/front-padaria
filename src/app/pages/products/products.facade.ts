@@ -40,11 +40,11 @@ export class ProductsFacade {
 
   sendOrder(order: IOrder) {
     const message = this.sendProductListViaWhatsApp(order);
-    const numberWhatsapp = '5533999024143'
+    const whatsAppNumber = order.whatsAppNumber
     const urlParams = encodeURIComponent(message);
 
-    const whatsappUrl = `https://wa.me/${numberWhatsapp}?text=${urlParams}`
-    window.open(whatsappUrl, '_blank');
+    const whatsappUrl = `https://wa.me/${whatsAppNumber}?text=${urlParams}`
+    window.open(whatsappUrl);
   }
 
   private readonly formatProductList = (products: IProduct[]): string => {

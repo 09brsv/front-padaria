@@ -32,13 +32,13 @@
             class="category">
             <h2>{{ product.category }}</h2>
           </div>
-          <app-product
-            [product]="product"
-            (modalChangeProduct)="onModalChange()"></app-product>
+          <app-product [product]="product"></app-product>
         </ng-container>
       </ng-container>
       <ng-template #empty>
-        <strong style="transform: translateX(20%);">Nenhum produto encontrado</strong>
+        <strong style="transform: translateX(20%)"
+          >Nenhum produto encontrado</strong
+        >
       </ng-template>
     </ng-template>
 
@@ -48,7 +48,7 @@
       <div class="position-relative">
         <button
           class="border-0"
-          style="background: none"
+          style="background: none; outline: none"
           (click)="openModalOrder()">
           <span
             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
@@ -61,7 +61,6 @@
     <div *ngIf="order">
       <app-modal-order
         #modalOrder
-        [modalAberto]="modalAberto"
         (productChange)="removeProduct($event)"
         (orderSendChange)="sendOrder($event)"
         [order]="order"></app-modal-order>

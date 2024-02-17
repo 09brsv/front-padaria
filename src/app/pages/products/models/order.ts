@@ -13,4 +13,5 @@ export interface IOrder {
   formatPayment?: string;
   status: `${EStatus}`;
   date?: Date;
+  whatsAppNumber?: string
 }

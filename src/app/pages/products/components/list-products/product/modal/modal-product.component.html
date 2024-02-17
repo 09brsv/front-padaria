@@ -19,7 +19,11 @@
             <div class="row g-3 mb-3">
               <div class="col-12 d-flex justify-content-between">
                 <span>Preço: </span>
-                <strong>{{ product.price | currency: 'BRL' }}/{{ product.measurementUnit }}</strong>
+                <strong
+                  >{{ product.price | currency: 'BRL' }}/{{
+                    product.measurementUnit
+                  }}</strong
+                >
               </div>
             </div>
             <div class="form-group">
@@ -28,9 +32,13 @@
                 <div class="col-4" style="text-align: left">
                   <span>Quantidade: </span>
                 </div>
-                <div class="d-flex align-items-center gap-4" style="width: 60%">
+                <div
+                  class="d-flex align-items-center gap-3 gap-md-4"
+                  style="width: 60%">
                   <button class="button-quantity">
-                    <fa-icon [icon]="negativeIcon" (click)="changeProductValue('decrement')"></fa-icon>
+                    <fa-icon
+                      [icon]="negativeIcon"
+                      (click)="changeProductValue('decrement')"></fa-icon>
                   </button>
                   <input
                     type="number"
@@ -39,15 +47,22 @@
                     max="1000"
                     class="form-control" />
                   <button class="button-quantity">
-                    <fa-icon [icon]="positiveIcon" (click)="changeProductValue('increment')"></fa-icon>
+                    <fa-icon
+                      [icon]="positiveIcon"
+                      (click)="changeProductValue('increment')"></fa-icon>
                   </button>
                 </div>
               </div>
             </div>
           </div>
         </form>
-        <div class="row g-3 align-items-end product-total">
-          <span>Total: <strong>{{formProduto.get('total')?.value | currency}}</strong></span>
+        <div class="product-total">
+          <span
+            >Total:
+            <strong>{{
+              formProduto.get('total')?.value | currency
+            }}</strong></span
+          >
         </div>
       </div>
     </div>
@@ -58,7 +73,7 @@
         <button
           type="button"
           class="btn btn-success"
-          style="width: -webkit-fill-available;"
+          style="width: -webkit-fill-available"
           (click)="addToCart()">
           Adicionar ao carrinho
         </button>

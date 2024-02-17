@@ -1,8 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, AbstractControl, Validators } from '@angular/forms';
 import { IconDefinition, faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { IOrder, IProduct, TValueChange } from 'src/app/pages/products/models';
 
@@ -22,13 +22,14 @@ export class ModalOrderComponent implements OnInit, OnChanges {
   whatsappIcon = faWhatsapp as IconDefinition;
 
   @ViewChild('content') content!: TemplateRef<ElementRef>;
-  @Input() modalAberto!: boolean;
   @Input({ required: true }) order!: IOrder;
   @Output() mudouModal = new EventEmitter();
   @Output() productChange = new EventEmitter<string>();
   @Output() orderSendChange = new EventEmitter<IOrder>();
 
   subscription: Subscription[] = [];
+  submitted = false
+  modal!: NgbModalRef
 
   constructor(
     private fb: FormBuilder,
@@ -69,6 +70,7 @@ export class ModalOrderComponent implements OnInit, OnChanges {
       formatPayment: this.order.formatPayment,
       status: this.order.status,
       description: this.order.description,
+      whatsAppNumber: [this.order.whatsAppNumber, [Validators.required, Validators.pattern(/^55[0-9]{2}9[0-9]{8}$/)]],
       products: this.fb.array(
         this.order.products.map(product =>
           this.fb.group({
@@ -100,7 +102,12 @@ export class ModalOrderComponent implements OnInit, OnChanges {
   }
 
   open(content: TemplateRef<ElementRef>) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
+    this.modal = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
+    return this.modal
+  }
+
+  close() {
+    this.modal.close()
   }
 
   get products() {
@@ -137,23 +144,18 @@ export class ModalOrderComponent implements OnInit, OnChanges {
     return this.getProductControl(index).get('price')?.value * this.getProductControl(index).get('quantity')?.value
   }
 
-  fecharModal() {
-    this.statusModal = false;
-    this.modalService.dismissAll();
-    // body.style.overflow = "scroll"
-  }
-
   closeOrder() {
+    this.submitted = true
     if (!this.formOrder.valid) {
-      return window.alert('Por favor, preencha todos os campos');
+      return
     }
 
     const order: IOrder = this.formOrder.getRawValue()
     order.date = new Date();
     this.orderSendChange.emit(order)
-    console.log(order)
-      this.fecharModal();
-      window.alert('Seu pedido foi concluído com sucesso!');
-      return;
+  }
+
+  get errorsWhatsAppNumber() {
+    return this.formOrder.get('whatsAppNumber')?.errors
   }
 }
