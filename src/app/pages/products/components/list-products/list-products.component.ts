@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ProductsFacade } from '../../products.facade';
 import { Observable, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
 import { FormControl } from '@angular/forms';
@@ -13,18 +13,23 @@ import { ModalOrderComponent } from 'src/app/shared/components/modal-order/modal
   styleUrls: ['./list-products.component.scss'],
   providers: [ProductsFacade, ProductsState],
 })
-export class ListProductsComponent {
+export class ListProductsComponent implements OnInit {
   listProducts!: IProduct[];
   order?: IOrder;
   errorMsg = '';
   basketIcon = faBasketShopping;
 
   @ViewChild('modalOrder') modalOrder!: ModalOrderComponent;
+  @ViewChild('container') body!: ElementRef;
   resultProducts$?: Observable<IProduct[]>;
   modalAberto = false;
+  scrollY = window.scrollY;
   constructor(public productsFacade: ProductsFacade) {
-    productsFacade.getAllProducts();
-    productsFacade.cart$.subscribe(res => {
+
+  }
+  ngOnInit(): void {
+    this.productsFacade.getAllProducts();
+    this.productsFacade.cart$.subscribe(res => {
       const amount = res.reduce((total, product) => total + (product.price * (product.quantity ?? 1)), 0);
       this.order = {
         amount,
@@ -32,6 +37,16 @@ export class ListProductsComponent {
         status: EStatus.pendente
       }
     })
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    if (window.scrollY >= 200 && this.scrollY < 200) {
+      this.scrollY = window.scrollY;
+    }
+    if (window.scrollY < 200 && this.scrollY >= 200) {
+      this.scrollY = window.scrollY;
+    }
   }
 
   onSearchChange(obs: Observable<string | undefined>) {

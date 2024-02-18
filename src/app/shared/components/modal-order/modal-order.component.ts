@@ -70,7 +70,7 @@ export class ModalOrderComponent implements OnInit, OnChanges {
       formatPayment: this.order.formatPayment,
       status: this.order.status,
       description: this.order.description,
-      whatsAppNumber: [this.order.whatsAppNumber, [Validators.required, Validators.pattern(/^55[0-9]{2}9[0-9]{8}$/)]],
+      whatsAppNumber: [this.order.whatsAppNumber, [Validators.required, Validators.pattern(/^[0-9]{2}9[0-9]{8}$/)]],
       products: this.fb.array(
         this.order.products.map(product =>
           this.fb.group({

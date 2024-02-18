@@ -33,10 +33,13 @@
 
 .cesta {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  right: 1.3rem;
+  transition: all 0.2s ease-in-out;
 
   &:hover {
     transform: scale(1.2);
+  }
+  & *:focus {
+    box-shadow: none;
   }
 }

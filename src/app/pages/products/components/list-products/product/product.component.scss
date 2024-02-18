@@ -13,8 +13,7 @@
   }
 
   &:hover .card-img {
-    transform: translateX(-300px);
-    transition: 1s ease-in-out;
+    transition: .7s ease-in-out;
     width: 0;
     opacity: 0.3;
   }
@@ -22,7 +21,7 @@
   &:hover .info-card {
     width: 100%;
     justify-content: left;
-    transition: .8s ease-in-out;
+    transition: .7s ease-in-out;
   }
 
   & .card-img {

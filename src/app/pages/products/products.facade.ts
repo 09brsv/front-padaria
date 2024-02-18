@@ -43,7 +43,7 @@ export class ProductsFacade {
     const whatsAppNumber = order.whatsAppNumber
     const urlParams = encodeURIComponent(message);
 
-    const whatsappUrl = `https://wa.me/${whatsAppNumber}?text=${urlParams}`
+    const whatsappUrl = `https://wa.me/55${whatsAppNumber}?text=${urlParams}`
     window.open(whatsappUrl);
   }
 
