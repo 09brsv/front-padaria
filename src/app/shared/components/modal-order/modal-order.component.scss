@@ -24,3 +24,24 @@
 ::ng-deep .modal-content {
   max-height: 80vh;
 }
+
+.button-quantity {
+  border: none;
+  background: none;
+  &:focus {
+    box-shadow: none;
+    transform: scale(1.2);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .sum-product {
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sum-product {
+    font-size: medium;
+  }
+}

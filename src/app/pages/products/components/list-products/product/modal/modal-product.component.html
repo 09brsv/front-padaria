@@ -29,12 +29,12 @@
             <div class="form-group">
               <div
                 class="row g-3 align-items-center justify-content-between mb-3">
-                <div class="col-4" style="text-align: left">
-                  <span>Quantidade: </span>
+                <div [ngClass]="innerWidth > 1000 ? 'col-4' : 'col-2'" style="text-align: left">
+                  <span>{{innerWidth > 1000 ? 'Quantidade ' : 'Qtd'}}: </span>
                 </div>
                 <div
-                  class="d-flex align-items-center gap-3 gap-md-4"
-                  style="width: 60%">
+                  class="d-flex align-items-center gap-1 gap-md-2"
+                  style="width: 65%">
                   <button class="button-quantity">
                     <fa-icon
                       [icon]="negativeIcon"

@@ -1,23 +1,22 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IProduct, TValueChange } from 'src/app/pages/products/models';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { CartState } from 'src/app/pages/products/state/cart.state';
-// const body = document.querySelector('body');
 
 @Component({
   selector: 'app-modal-product',
   templateUrl: './modal-product.component.html',
   styleUrls: ['./modal-product.component.scss'],
 })
-export class ModalProductComponent implements OnInit {
+export class ModalProductComponent implements OnInit, AfterViewInit {
   @Input({ required: true }) product!: IProduct;
   @Output() addToCartEmit = new EventEmitter<IProduct>();
 
   @ViewChild('content') content!: TemplateRef<ElementRef>;
 
   formProduto!: FormGroup;
+  innerWidth = window.innerWidth
   negativeIcon = faMinus;
   positiveIcon = faPlus;
 
@@ -26,6 +25,9 @@ export class ModalProductComponent implements OnInit {
     private readonly modalService: NgbModal,
   ) {
 
+  }
+  ngAfterViewInit(): void {
+    this.innerWidth = window.innerWidth
   }
   ngOnInit(): void {
     this.formProduto = this.fb.group({
@@ -37,6 +39,13 @@ export class ModalProductComponent implements OnInit {
         this.formProduto.get('total')?.setValue(this.product?.price * this.formProduto.get('quantity')?.value)
       }
     })
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    if ((event.target.innerWidth < 1000 && this.innerWidth > 1000) || (event.target.innerWidth > 768 && this.innerWidth < 768)) {
+      this.innerWidth = event.target.innerWidth
+    }
   }
 
   changeProductValue(handle: TValueChange) {

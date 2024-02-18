@@ -5,6 +5,10 @@
   .button-quantity {
     border: none;
     background: none;
+    &:focus {
+      box-shadow: none;
+      transform: scale(1.2);
+    }
   }
 
   & .product-total {
