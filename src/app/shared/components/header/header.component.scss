@@ -81,12 +81,13 @@ header {
         width: 45px;
         position: absolute;
         right: 0;
+        display: flex;
+        color: #b8b9bc;
 
-        & i {
+        & fa-icon {
           position: absolute;
-          top: 14px;
+          top: 11px;
           left: 4px;
-          color: #b8b9bc;
         }
       }
 
