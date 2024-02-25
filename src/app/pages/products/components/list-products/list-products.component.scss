@@ -31,13 +31,15 @@
 }
 
 
-.cesta {
+.car {
   position: fixed;
-  right: 1.3rem;
+  align-self: baseline;
+  right: 1.5rem;
+  top: .7rem;
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    transform: scale(1.2);
+    transform: scale(1.05);
   }
   & *:focus {
     box-shadow: none;

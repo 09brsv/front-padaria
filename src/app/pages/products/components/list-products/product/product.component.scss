@@ -1,32 +1,37 @@
 .card {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.2));
   border-radius: 8px 14px 14px 8px;
-  height: 150px;
-  width: 300px;
+  height: 500px;
+  width: 400px;
   overflow-x: hidden;
   cursor: pointer;
 
+  @media screen and (max-width: 768px) {
+    width: 300px;
+    height: 350px;
+  }
+
   &:hover {
     scale: 1.05;
+      transition: .1s ease-in-out;
   }
 
-  &:hover .card-img {
-    transition: .7s ease-in-out;
-    width: 0;
-    opacity: 0.3;
-  }
+  // &:hover .card-img {
+    //   width: 0;
+    //   opacity: 0.3;
+    // }
 
-  &:hover .info-card {
-    width: 100%;
-    justify-content: left;
-    transition: .7s ease-in-out;
-  }
+    // &:hover .info-card {
+      //   width: 100%;
+      //   justify-content: left;
+      //   transition: .7s ease-in-out;
+  // }
 
   & .card-img {
-    width: 40%;
-    height: 100%;
+    width: 100%;
+    height: 50%;
     & img {
       width: 100%;
       height: 100%;
@@ -37,11 +42,11 @@
 
   & .info-card {
     padding-top: 7px;
-    padding-left: 14px;
+    padding-left: 18px;
     padding-right: 6px;
     background: #ffffff;
     border-radius: 0px 8px 8px 0px;
-    width: 60%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -52,11 +57,16 @@
       font-size: 20px;
     }
 
-    & p.card-text, h3.card-title {
+    & strong.card-text, h3.card-title {
       overflow: hidden;
       width: 100%;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+    & strong.card-text {
+      font-size: 1.2em;
+      line-height: 24px;
+      color: #000000;
     }
   }
 }

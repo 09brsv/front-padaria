@@ -1,5 +1,24 @@
 <div class="body">
-  <app-header (searchChange)="onSearchChange($event)"></app-header>
+  <app-header (searchChange)="onSearchChange($event)">
+    <div
+    class="car"
+    >
+    <div class="position-relative">
+      <button
+        class="border-0"
+        style="background: none; outline: none"
+        (click)="openModalOrder()"
+        *ngIf="productsFacade.cart$ | async as car"
+        >
+        <span
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >{{ car.length ? car.length : '' }}</span
+        >
+        <fa-icon [icon]="basketIcon" style="color: rgb(160, 139, 139)" size="2xl"></fa-icon>
+      </button>
+    </div>
+  </div>
+  </app-header>
   <section class="container" #container>
     <div class="row-card">
       <ng-container
@@ -41,24 +60,6 @@
         >
       </ng-template>
     </ng-template>
-    <div
-      class="cesta"
-      *ngIf="(productsFacade.cart$ | async)?.length as basketLength"
-      [ngStyle]="{'top': scrollY > 200 ? '4rem' : '16rem'}"
-      >
-      <div class="position-relative">
-        <button
-          class="border-0"
-          style="background: none; outline: none"
-          (click)="openModalOrder()">
-          <span
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-            >{{ basketLength }}</span
-          >
-          <fa-icon [icon]="basketIcon" size="2xl"></fa-icon>
-        </button>
-      </div>
-    </div>
     <div *ngIf="order">
       <app-modal-order
         #modalOrder

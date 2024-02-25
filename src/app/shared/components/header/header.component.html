@@ -1,19 +1,23 @@
 <header>
   <div class="header-filter">
     <div class="inputs">
-      <input type="search" class="form-control" [formControl]="fieldSearch" placeholder="Busque por nome ou categoria..." />
-      <button class="btn">
+      <input
+        type="search"
+        class="form-control"
+        [formControl]="fieldSearch"
+        placeholder="Busque por nome ou categoria..." />
+      <span>
         <fa-icon [icon]="searchIcon"></fa-icon>
-      </button>
+      </span>
     </div>
+    <ng-content class="car"></ng-content>
   </div>
   <div class="header-title">
     <button (click)="irParaTelaInicial()">
       <img src="assets/images/logo.jpg" alt="Logotipo" />
     </button>
-    <div class="header-title">
+    <div class="header-title" style="padding-top: initial">
       <h1>Nome da padaria</h1>
     </div>
   </div>
-
 </header>

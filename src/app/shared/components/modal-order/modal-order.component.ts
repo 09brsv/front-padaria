@@ -58,6 +58,7 @@ export class ModalOrderComponent implements OnInit, OnChanges {
             title: product.title,
             price: product.price,
             quantity: product.quantity,
+            image: product.image
           }))
           this.handleValueChange(product)
         }
@@ -78,6 +79,7 @@ export class ModalOrderComponent implements OnInit, OnChanges {
             title: product.title,
             price: product.price,
             quantity: product.quantity,
+            image: product.image
           })
         )
       ),

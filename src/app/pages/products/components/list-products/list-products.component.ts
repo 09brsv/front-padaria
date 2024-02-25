@@ -1,10 +1,9 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductsFacade } from '../../products.facade';
 import { Observable, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
-import { FormControl } from '@angular/forms';
 import { EStatus, IOrder, IProduct } from '../../models';
 import { ProductsState } from '../../state/products.state';
-import { faMagnifyingGlass, faBasketShopping } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { ModalOrderComponent } from 'src/app/shared/components/modal-order/modal-order.component';
 
 @Component({
@@ -17,13 +16,12 @@ export class ListProductsComponent implements OnInit {
   listProducts!: IProduct[];
   order?: IOrder;
   errorMsg = '';
-  basketIcon = faBasketShopping;
+  basketIcon = faShoppingCart;
 
   @ViewChild('modalOrder') modalOrder!: ModalOrderComponent;
   @ViewChild('container') body!: ElementRef;
   resultProducts$?: Observable<IProduct[]>;
   modalAberto = false;
-  scrollY = window.scrollY;
   constructor(public productsFacade: ProductsFacade) {
 
   }
@@ -37,16 +35,6 @@ export class ListProductsComponent implements OnInit {
         status: EStatus.pendente
       }
     })
-  }
-
-  @HostListener('window:scroll', ['$event'])
-  onScroll() {
-    if (window.scrollY >= 200 && this.scrollY < 200) {
-      this.scrollY = window.scrollY;
-    }
-    if (window.scrollY < 200 && this.scrollY >= 200) {
-      this.scrollY = window.scrollY;
-    }
   }
 
   onSearchChange(obs: Observable<string | undefined>) {

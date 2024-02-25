@@ -1,4 +1,4 @@
-<ng-template #content let-modal *ngIf="statusModal && formOrder && products">
+<ng-template #content let-modal *ngIf="statusModal">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Carrinho de compras</h4>
     <button
@@ -7,49 +7,63 @@
       aria-label="Close"
       (click)="modal.dismiss('Cross click')"></button>
   </div>
-  <div class="card" [formGroup]="formOrder">
-    <div class="w-full text-end pe-2">
+  <div
+    class="card"
+    [formGroup]="formOrder"
+    *ngIf="formOrder && products?.controls?.length; else empty">
+    <div class="w-full text-end pe-4">
       <b>Valor</b>
     </div>
     <div
       class="modal-body mb-5"
       formArrayName="products"
       *ngFor="let product of products.controls; let i = index">
-      <div
-        class="row align-items-baseline"
-        [formGroup]="getProductGroup(product)">
+      <div class="row item-car" [formGroup]="getProductGroup(product)">
         <div class="col col-1">
           <span
             ><fa-icon [icon]="removeIcon" (click)="removeProduct(i)"></fa-icon
           ></span>
         </div>
-        <div class="col col-3 col-lg-4 title-product">
-          <span>{{ product.get('title')?.value }}</span>
+        <div class="card-img">
+          <img
+            src="{{
+              product.get('image')?.value !== undefined
+                ? product.get('image')?.value
+                : 'assets/images/capa-indisponivel.jpg'
+            }}"
+            alt="Capa do livro" />
         </div>
-        <div class="col col-5 col-lg-4">
-          <div class="d-flex align-items-center gap-1 gap-md-2">
-            <button class="button-quantity">
-              <fa-icon
-                [icon]="negativeIcon"
-                (click)="changeProductValue('decrement', i)"></fa-icon>
-            </button>
-            <input
-              type="number"
-              formControlName="quantity"
-              min="0"
-              max="1000"
-              class="form-control" />
-            <button class="button-quantity">
-              <fa-icon
-                [icon]="positiveIcon"
-                (click)="changeProductValue('increment', i)"></fa-icon>
-            </button>
+        <div class="card-description col-6">
+          <div class="title-product">
+            <span>{{ product.get('title')?.value }}</span>
+          </div>
+          <div class="col-8 col-md-6">
+            <div class="d-flex align-items-center gap-1 gap-md-2">
+              <button class="button-quantity">
+                <fa-icon
+                  [icon]="negativeIcon"
+                  (click)="changeProductValue('decrement', i)"></fa-icon>
+              </button>
+              <input
+                type="number"
+                formControlName="quantity"
+                min="0"
+                max="1000"
+                class="form-control" />
+              <button class="button-quantity">
+                <fa-icon
+                  [icon]="positiveIcon"
+                  (click)="changeProductValue('increment', i)"></fa-icon>
+              </button>
+            </div>
           </div>
         </div>
-        <div class="col col-2 col-3 text-end sum-product">
-          <span
-            ><strong>{{ getTotal(i) | currency }}</strong></span
-          >
+        <div class="row" style="padding-right: 0">
+          <div class="col col-6 offset-6 text-end sum-product">
+            <span style="color: red"
+              ><strong>{{ getTotal(i) | currency }}</strong></span
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -103,10 +117,12 @@
       </div>
     </div>
     <div class="row my-3">
-      <div class="col col-12 text-end">
+      <div class="col col-12 text-end total-product">
         <span
           >Total:
-          <strong>{{ formOrder.get('amount')?.value | currency }}</strong></span
+          <strong style="color: red">{{
+            formOrder.get('amount')?.value | currency
+          }}</strong></span
         >
       </div>
     </div>
@@ -115,7 +131,7 @@
         <div class="form-group">
           <button
             class="btn btn-success"
-            style="width: -webkit-fill-available"
+            style="width: 100%"
             (click)="closeOrder()">
             Enviar pedido para whatsapp
             <fa-icon class="ms-2" [icon]="whatsappIcon" [size]="'2x'"></fa-icon>
@@ -124,4 +140,9 @@
       </div>
     </div>
   </div>
+  <ng-template #empty>
+    <div class="empty">
+      <p>Não há produtos no carrinho!</p>
+    </div>
+  </ng-template>
 </ng-template>
