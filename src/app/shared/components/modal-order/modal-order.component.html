@@ -37,7 +37,7 @@
           <div class="title-product">
             <span>{{ product.get('title')?.value }}</span>
           </div>
-          <div class="col-8 col-md-6">
+          <div>
             <div class="d-flex align-items-center gap-1 gap-md-2">
               <button class="button-quantity">
                 <fa-icon
@@ -60,9 +60,7 @@
         </div>
         <div class="row" style="padding-right: 0">
           <div class="col col-6 offset-6 text-end sum-product">
-            <span style="color: red"
-              ><strong>{{ getTotal(i) | currency }}</strong></span
-            >
+            <span style="color: #ed4747">{{ getTotal(i) | currency }}</span>
           </div>
         </div>
       </div>
@@ -120,9 +118,9 @@
       <div class="col col-12 text-end total-product">
         <span
           >Total:
-          <strong style="color: red">{{
+          <span style="color: #ed4747">{{
             formOrder.get('amount')?.value | currency
-          }}</strong></span
+          }}</span></span
         >
       </div>
     </div>
